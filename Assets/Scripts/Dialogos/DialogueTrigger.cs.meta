@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8a1207b546282c041b1e1da4a1adcb45
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogueData: {instanceID: 0}
+  - pressEIndicator: {fileID: 6872152194353665655, guid: 0cabe7dc8b9d6644292af6ef548a64bd, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

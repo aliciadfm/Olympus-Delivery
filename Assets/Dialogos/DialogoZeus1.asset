@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
+  m_Name: DialogoZeus1
+  m_EditorClassIdentifier: 
+  npcName: Zeus
+  sentences:
+  - "\xBFY tu qu\xE9 miras, feo?"
+  - "\xA1Felicidades, has sido ascendido a semisemidi\xF3s becario!"
+  - "Ver\xE1s, nosotros los Dioses, necesitamos tu ayuda. Llevamos demasiado tiempo\r\ndiscutiendo
+    entre nosotros y arrastrando problemas."
+  - "En nuestra \xFAltima reuni\xF3n decidimos que cada Dios tendr\xEDa su propio
+    espacio.\r\n\xA1Su propio planeta!"
+  - "Pero eso solo nos ha separado m\xE1s y nuestros problemas parecen ir a peor."
+  - "Y ah\xED es donde entras t\xFA. Quiero que vayas a cada planeta y ayudes a los
+    Dioses."

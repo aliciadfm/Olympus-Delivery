@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f3dfac818cb09034887083be0d2c4ed9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dialogueUI: {fileID: 6317260498116618837, guid: 1c5f1a3a7e203994f8ec2d46f6479e2c, type: 3}
+  - npcNameText: {fileID: 426106955690585334, guid: cb95b378347600b468f2e9b4e7a118d4, type: 3}
+  - dialogueText: {fileID: 9185419416052287389, guid: 650275be8dcefb34eaf0f6c151f06625, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
