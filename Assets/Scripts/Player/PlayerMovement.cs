@@ -15,6 +15,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+    // Dirección guardada cuando el jugador salta
+    private Vector3 airMoveDirection;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -24,26 +27,42 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         isGrounded = controller.isGrounded;
 
-        if (isGrounded && velocity.y < 0f) velocity.y = groundedGravity;
-
-        // Input de movimiento (plano XZ)
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-        if (move.sqrMagnitude > 1f) move.Normalize();
-
-        controller.Move(move * moveSpeed * Time.deltaTime);
-
-
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && velocity.y < 0f)
         {
-            // v = sqrt(2 * h * -g)
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            velocity.y = groundedGravity;
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        Vector3 move = Vector3.zero;
 
+        // Solo tomamos input si estamos en el suelo
+        if (isGrounded)
+        {
+            float x = Input.GetAxisRaw("Horizontal");
+            float z = Input.GetAxisRaw("Vertical");
+
+            move = transform.right * x + transform.forward * z;
+            if (move.sqrMagnitude > 1f) move.Normalize();
+
+            // Si hay movimiento, actualizamos la dirección de movimiento
+            airMoveDirection = move;
+
+            // Salto
+            if (Input.GetButtonDown("Jump"))
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+        }
+        else
+        {
+            // En el aire usamos la dirección guardada (sin cambiarla)
+            move = airMoveDirection;
+        }
+
+        // Movimiento horizontal
+        controller.Move(move * moveSpeed * Time.deltaTime);
+
+        // Gravedad
+        velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 }
