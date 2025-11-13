@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
     public float moveSpeed = 6f;
@@ -17,6 +17,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     // Dirección guardada cuando el jugador salta
     private Vector3 airMoveDirection;
+    public bool canMove = true;
 
     void Awake()
     {
@@ -25,6 +26,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void Update()
     {
+        if (!canMove) return; 
+        
         isGrounded = controller.isGrounded;
 
         if (isGrounded && velocity.y < 0f)

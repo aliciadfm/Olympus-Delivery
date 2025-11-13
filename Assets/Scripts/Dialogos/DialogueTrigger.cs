@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public DialogueData dialogueData;
+    [Header("Conjuntos de diálogos en orden")]
+    public DialogueData[] dialogueSequence;
+    private int dialogueIndex = 0;
+
+    [Header("UI de interacción")]
     public GameObject pressEIndicator;
 
     private bool playerInRange = false;
@@ -17,8 +21,22 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            DialogueManager.Instance.StartDialogue(dialogueData);
+            if (dialogueSequence.Length == 0)
+            {
+                return;
+            }
+
+            DialogueData currentDialogue = dialogueSequence[dialogueIndex];
+
+            Debug.Log($"Iniciando diálogo {dialogueIndex + 1} con {name}");
+
+            DialogueManager.Instance.StartDialogue(currentDialogue);
             pressEIndicator.SetActive(false);
+
+            dialogueIndex++;
+
+            if (dialogueIndex >= dialogueSequence.Length)
+                dialogueIndex = dialogueSequence.Length - 1;
         }
     }
 

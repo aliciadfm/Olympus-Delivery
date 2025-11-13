@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
     private int index = 0;
     private bool isDialogueActive = false;
     private Coroutine typingCoroutine;
+    private PlayerMovement playerMovement;
 
     public float typingSpeed = 0.05f;
 
@@ -25,9 +26,20 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(false);
     }
 
+    void Start()
+    {
+        playerMovement = FindAnyObjectByType<PlayerMovement>();
+    }
+
     public void StartDialogue(DialogueData dialogue)
     {
         if (isDialogueActive) return;
+
+        if (playerMovement == null)
+            playerMovement = FindAnyObjectByType<PlayerMovement>();
+
+        if (playerMovement != null)
+            playerMovement.canMove = false;
 
         isDialogueActive = true;
         dialogueUI.SetActive(true);
@@ -50,7 +62,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            EndDialogue();
+            StartCoroutine(EndDialogueSmooth());
         }
     }
 
@@ -64,15 +76,24 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void EndDialogue()
+    private IEnumerator EndDialogueSmooth()
     {
         isDialogueActive = false;
         dialogueUI.SetActive(false);
+
+        // 🔹 Esperar un frame antes de reactivar el movimiento
+        yield return null;
+
+        if (playerMovement != null)
+            playerMovement.canMove = true;
     }
 
     void Update()
     {
-        if (isDialogueActive && Input.GetKeyDown(KeyCode.Q))
+        if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
             ShowNextSentence();
+
+        if (playerMovement == null)
+            playerMovement = FindAnyObjectByType<PlayerMovement>();
     }
 }
