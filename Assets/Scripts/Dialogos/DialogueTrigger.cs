@@ -24,7 +24,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("NPC"))
+        if (other.CompareTag("Player"))
         {
             playerInRange = true;
             if (pressEIndicator != null)
@@ -34,7 +34,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("NPC"))
+        if (other.CompareTag("Player"))
         {
             playerInRange = false;
             if (pressEIndicator != null)
