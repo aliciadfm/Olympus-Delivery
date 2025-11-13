@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
   m_Name: DialogoZues2
   m_EditorClassIdentifier: 
-  npcName: 
+  npcName: Zeus
   sentences:
-  - Hola :)
+  - "\xBFQue m\xE1s quieres que te explique?\n\xBFC\xF3mo atarte zapatos?\nEspabila."

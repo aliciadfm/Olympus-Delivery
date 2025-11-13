@@ -13,7 +13,10 @@ public class DialogueManager : MonoBehaviour
     private string[] sentences;
     private int index = 0;
     private bool isDialogueActive = false;
+    private bool isTyping = false;
+    private string currentSentence = "";
     private Coroutine typingCoroutine;
+
     private PlayerMovement playerMovement;
     private CameraMovement cameraMovement;
     public GameObject hermes;
@@ -63,7 +66,8 @@ public class DialogueManager : MonoBehaviour
 
         if (index < sentences.Length)
         {
-            typingCoroutine = StartCoroutine(TypeSentence(sentences[index]));
+            currentSentence = sentences[index];
+            typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
             index++;
         }
         else
@@ -74,12 +78,16 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TypeSentence(string sentence)
     {
+        isTyping = true;
         dialogueText.text = "";
+
         foreach (char letter in sentence.ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
+
+        isTyping = false;
     }
 
     private IEnumerator EndDialogueSmooth()
@@ -88,7 +96,6 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(false);
         hermes.SetActive(true);
 
-        // 🔹 Esperar un frame antes de reactivar el movimiento
         yield return null;
 
         if (playerMovement != null)
@@ -100,7 +107,20 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
         if (isDialogueActive && Input.GetKeyDown(KeyCode.Space))
-            ShowNextSentence();
+        {
+            if (isTyping)
+            {
+                // 🔹 Completar inmediatamente el texto actual
+                StopCoroutine(typingCoroutine);
+                dialogueText.text = currentSentence;
+                isTyping = false;
+            }
+            else
+            {
+                // 🔹 Si ya está completo, pasar al siguiente
+                ShowNextSentence();
+            }
+        }
 
         if (playerMovement == null)
             playerMovement = FindAnyObjectByType<PlayerMovement>();

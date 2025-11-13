@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
   m_Name: Hermes2
   m_EditorClassIdentifier: 
-  npcName: 
-  sentences: []
+  npcName: Hermes
+  sentences:
+  - "Suerte colega, la necesitar\xE1s."

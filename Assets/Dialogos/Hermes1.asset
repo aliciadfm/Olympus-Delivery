@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
   m_Name: Hermes1
   m_EditorClassIdentifier: 
-  npcName: 
-  sentences: []
+  npcName: Hermes
+  sentences:
+  - "\xBFDe verdad eres t\xFA el nuevo becario? No me puedo creer que Zeus lo haya
+    hecho."
+  - "Siento pena por ti ahora mismo, pero no quiero tener que aguantar ning\xFAn
+    berrinche de esos Dioses egoc\xE9ntricos en un largo tiempo"
+  - "Toma mis botas y mi mapa de planetas; \xFAsalos para cambiar de planeta cuando
+    quieras."
+  - "Te debo una muy grande, colega. Si volvemos a vernos en mi planeta, te invitar\xE9
+    a  la mejor ambros\xEDa del Olimpo."
