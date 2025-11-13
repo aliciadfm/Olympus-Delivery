@@ -16,7 +16,7 @@ public class DialogueManager : MonoBehaviour
     private Coroutine typingCoroutine;
     private PlayerMovement playerMovement;
     private CameraMovement cameraMovement;
-
+    public GameObject hermes;
     public float typingSpeed = 0.05f;
 
     void Awake()
@@ -86,6 +86,7 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = false;
         dialogueUI.SetActive(false);
+        hermes.SetActive(true);
 
         // 🔹 Esperar un frame antes de reactivar el movimiento
         yield return null;
