@@ -10,6 +10,8 @@ public class CameraMovement : MonoBehaviour
 
     private float xRotation = 0f;
 
+    public bool canMove = true; 
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -18,6 +20,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
+        if (!canMove) return;
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 

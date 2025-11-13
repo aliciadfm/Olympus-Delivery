@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
     private Coroutine typingCoroutine;
     private PlayerMovement playerMovement;
+    private CameraMovement cameraMovement;
 
     public float typingSpeed = 0.05f;
 
@@ -29,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         playerMovement = FindAnyObjectByType<PlayerMovement>();
+        cameraMovement = FindAnyObjectByType<CameraMovement>();
     }
 
     public void StartDialogue(DialogueData dialogue)
@@ -37,9 +39,13 @@ public class DialogueManager : MonoBehaviour
 
         if (playerMovement == null)
             playerMovement = FindAnyObjectByType<PlayerMovement>();
+        if (cameraMovement == null)
+            cameraMovement = FindAnyObjectByType<CameraMovement>();
 
         if (playerMovement != null)
             playerMovement.canMove = false;
+        if (cameraMovement != null)
+            cameraMovement.canMove = false;
 
         isDialogueActive = true;
         dialogueUI.SetActive(true);
@@ -86,6 +92,8 @@ public class DialogueManager : MonoBehaviour
 
         if (playerMovement != null)
             playerMovement.canMove = true;
+        if (cameraMovement != null)
+            cameraMovement.canMove = true;
     }
 
     void Update()
@@ -95,5 +103,7 @@ public class DialogueManager : MonoBehaviour
 
         if (playerMovement == null)
             playerMovement = FindAnyObjectByType<PlayerMovement>();
+        if (cameraMovement == null)
+            cameraMovement = FindAnyObjectByType<CameraMovement>();
     }
 }
