@@ -4,68 +4,166 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float moveSpeed = 6f;
+    public float speed = 6f;
+    public float sprintMultiplier = 1.6f;
+    public float airControlMultiplier = 0.6f;
 
     [Header("Salto y Gravedad")]
     public float jumpHeight = 1.6f;
-    public float gravity = -19.62f; // ~2x gravedad real para feeling FPS
+    public float gravity = -19.62f;
     public float groundedGravity = -2f;
 
-    private CharacterController controller;
-    private Vector3 velocity;
-    private bool isGrounded;
+    [Header("Dash")]
+    public float dashForce = 20f;
+    public float dashDuration = 0.15f;
+    public float dashCooldown = 1f;
 
-    // Dirección guardada cuando el jugador salta
-    private Vector3 airMoveDirection;
+    private bool isDashing = false;
+    private float dashTimer = 0f;
+    private float dashCooldownTimer = 0f;
+
+    private CharacterController controller;
+    private AbilityManager abilityManager;
+
+    private Vector3 velocity;
+    private Vector3 inputDirection;
+
+    private bool isGrounded;
+    private bool canDoubleJump = false;
+
     public bool canMove = true;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
+        abilityManager = FindAnyObjectByType<AbilityManager>();
     }
 
     void Update()
     {
-        if (!canMove) return; 
-        
+        if (!canMove) return;
+
+        EnsureAbilityManager();
+        UpdateGroundStatus();
+        HandleDash();
+
+        if (isDashing) return;
+
+        ReadMovementInput();
+        MovePlayer();
+        HandleJump();
+        ApplyGravity();
+    }
+
+    private void EnsureAbilityManager()
+    {
+        if (abilityManager == null)
+            abilityManager = FindAnyObjectByType<AbilityManager>();
+    }
+
+    private void UpdateGroundStatus()
+    {
         isGrounded = controller.isGrounded;
 
         if (isGrounded && velocity.y < 0f)
-        {
             velocity.y = groundedGravity;
-        }
+    }
 
-        Vector3 move = Vector3.zero;
+    private void ReadMovementInput()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
 
-        // Solo tomamos input si estamos en el suelo
+        inputDirection = (transform.right * x + transform.forward * z);
+
+        if (inputDirection.sqrMagnitude > 1f)
+            inputDirection.Normalize();
+
+        if (!isGrounded)
+            inputDirection *= airControlMultiplier;
+    }
+
+    private float GetCurrentSpeed()
+    {
+        float currentSpeed = speed;
+
+        if (abilityManager.HasAbility(AbilityType.Run) && Input.GetKey(KeyCode.LeftShift))
+            currentSpeed *= sprintMultiplier;
+
+        return currentSpeed;
+    }
+
+    private void MovePlayer()
+    {
+        float currentSpeed = GetCurrentSpeed();
+        controller.Move(inputDirection * currentSpeed * Time.deltaTime);
+    }
+
+    private void HandleJump()
+    {
         if (isGrounded)
         {
-            float x = Input.GetAxisRaw("Horizontal");
-            float z = Input.GetAxisRaw("Vertical");
+            canDoubleJump = true;
 
-            move = transform.right * x + transform.forward * z;
-            if (move.sqrMagnitude > 1f) move.Normalize();
-
-            // Si hay movimiento, actualizamos la dirección de movimiento
-            airMoveDirection = move;
-
-            // Salto
             if (Input.GetButtonDown("Jump"))
+                Jump();
+        }
+        else if (abilityManager.HasAbility(AbilityType.DoubleJump))
+        {
+            if (canDoubleJump && Input.GetButtonDown("Jump"))
             {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                Jump();
+                canDoubleJump = false;
             }
         }
-        else
-        {
-            // En el aire usamos la dirección guardada (sin cambiarla)
-            move = airMoveDirection;
-        }
+    }
 
-        // Movimiento horizontal
-        controller.Move(move * moveSpeed * Time.deltaTime);
+    private void Jump()
+    {
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    }
 
-        // Gravedad
+    private void ApplyGravity()
+    {
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void HandleDash()
+    {
+        if (!abilityManager.HasAbility(AbilityType.Dash))
+            return;
+
+        dashCooldownTimer -= Time.deltaTime;
+
+        if (CanStartDash())
+            StartDash();
+
+        if (isDashing)
+            ExecuteDash();
+    }
+
+    private bool CanStartDash()
+    {
+        return Input.GetKeyDown(KeyCode.R)
+            && dashCooldownTimer <= 0f
+            && !isDashing;
+    }
+
+    private void StartDash()
+    {
+        isDashing = true;
+        dashTimer = dashDuration;
+        dashCooldownTimer = dashCooldown;
+    }
+
+    private void ExecuteDash()
+    {
+        dashTimer -= Time.deltaTime;
+
+        controller.Move(transform.forward * dashForce * Time.deltaTime);
+
+        if (dashTimer <= 0f)
+            isDashing = false;
     }
 }
