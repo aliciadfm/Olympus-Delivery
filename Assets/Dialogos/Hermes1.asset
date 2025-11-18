@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Hermes
   sentences:
+  - "\xBFC\xF3mo has llegado hasta aqu\xED arriba?"
   - "\xBFDe verdad eres t\xFA el nuevo becario? No me puedo creer que Zeus lo haya
     hecho."
   - "Siento pena por ti ahora mismo, pero no quiero tener que aguantar ning\xFAn
-    berrinche de esos Dioses egoc\xE9ntricos en un largo tiempo"
+    berrinche de esos Dioses egoc\xE9ntricos en un largo tiempo."
   - "Toma mis botas y mi mapa de planetas; \xFAsalos para cambiar de planeta cuando
     quieras."
   - "Te debo una muy grande, colega. Si volvemos a vernos en mi planeta, te invitar\xE9
-    a  la mejor ambros\xEDa del Olimpo."
+    a la mejor ambros\xEDa del Olimpo."

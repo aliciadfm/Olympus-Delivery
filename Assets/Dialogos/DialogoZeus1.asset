@@ -14,25 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Zeus
   sentences:
-  - "\xBFY tu qu\xE9 miras, feo?"
-  - Espera un momento...
-  - "T\xFA eres el nuevo becario."
+  - Por fin te despiertas mortal.
   - "\xA1Felicidades, has sido ascendido a becario divino!"
-  - "Ver\xE1s, nosotros los Dioses, necesitamos tu ayuda. Llevamos demasiado tiempo\r\ndiscutiendo
-    entre nosotros y arrastrando problemas."
+  - "Ver\xE1s, nosotros los Dioses, necesitamos tu ayuda. Llevamos demasiado tiempo
+    arrastrando problemas."
   - "En nuestra \xFAltima reuni\xF3n decidimos que cada Dios tendr\xEDa su propio
     espacio.\r\n\xA1Su propio planeta!"
   - "Pero eso solo nos ha separado m\xE1s y nuestros problemas parecen ir a peor."
   - "Y ah\xED es donde entras t\xFA. Quiero que vayas a cada planeta y ayudes a los
     Dioses."
-  - "Lo de las discusiones ya lo arreglaremos despu\xE9s."
   - "\xBFQu\xE9 dices, mortal? \xBFAceptas?"
   - Realmente me da igual si aceptas o no, lo vas a hacer y punto, que de eso va
     ser becario.
   - "De normal, de esto se encargaba Hermes, pero cuando\r\nse lo coment\xE9, se
     enfad\xF3 conmigo y se fue a uno de mis \"templos\"."
   - Dice que los recados no son trabajo del Dios mensajero.
-  - "Hermes te est\xE1 espiando desde unos troncos ah\xED delante.  Queria ver al
-    nuevo becario."
-  - "P\xEDdele de mi parte que te ense\xF1e a viajar entre planetas.\r\nCreo que
-    se alegrar\xE1 de tener unas vacaciones."
+  - "Pero bueno, antes de mandarta a otro planeta tengo que ver si est\xE1s preparado."
+  - "Uno de mis templos a\xFAn tiene restos de la \xFAltima fiesta que di. Elim\xEDnala."
+  - "En el otro est\xE1 Hermes. P\xEDdele de mi parte que te ese\xF1e a viajar entre
+    planetas. Creo que se alegrar\xE1 de tener unas vacaiones."
+  - Ven a hablar conmigo cuando termines.
