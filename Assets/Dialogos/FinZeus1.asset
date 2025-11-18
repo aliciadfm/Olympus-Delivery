@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
   m_Name: FinZeus1
   m_EditorClassIdentifier: 
-  npcName: 
-  sentences: []
+  npcName: Zeus
+  sentences:
+  - "Has hecho un trabajo excelente. \xA1Felicidades, est\xE1s contratado!"
+  - "Ya est\xE1s listo para asistir a los Dioses veinticuatro horas al d\xEDa, siete
+    d\xEDas a la semana."
+  - "No te preocupes por comer y dormir. Te he hecho un semisemidi\xF3s becario para
+    que no tengas que preocuparte de eso."
+  - "Tu pago ser\xE1 el del humano promedio; creo que eso es a lo que est\xE1s acostumrbado."
+  - Me ha sorprendido que sea tan poco.
+  - "M\xE1rchate al siguiente planeta cuando est\xE9s listo."

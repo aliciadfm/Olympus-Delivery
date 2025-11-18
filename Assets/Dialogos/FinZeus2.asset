@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: FinZeus2
   m_EditorClassIdentifier: 
   npcName: 
-  sentences: []
+  sentences:
+  - "\xBFA qu\xE9 espera parguela?\n\xA1Uno, dos, uno, dos!"
