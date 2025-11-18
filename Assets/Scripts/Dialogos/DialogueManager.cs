@@ -16,7 +16,7 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     private string currentSentence = "";
     private Coroutine typingCoroutine;
-
+    public bool IsDialogueActive => isDialogueActive;
     private PlayerMovement playerMovement;
     private CameraMovement cameraMovement;
     public GameObject hermes;
@@ -110,14 +110,12 @@ public class DialogueManager : MonoBehaviour
         {
             if (isTyping)
             {
-                // 🔹 Completar inmediatamente el texto actual
                 StopCoroutine(typingCoroutine);
                 dialogueText.text = currentSentence;
                 isTyping = false;
             }
             else
             {
-                // 🔹 Si ya está completo, pasar al siguiente
                 ShowNextSentence();
             }
         }
