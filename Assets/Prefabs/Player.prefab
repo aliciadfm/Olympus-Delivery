@@ -71,10 +71,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e06d251c750c51499916ced39517547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  speed: 6
+  sprintMultiplier: 1.6
+  airControlMultiplier: 0.6
   jumpHeight: 1.6
   gravity: -19.62
   groundedGravity: -2
+  dashForce: 20
+  dashDuration: 0.15
+  dashCooldown: 1
+  canMove: 1
 --- !u!1 &7258834178766413374
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,4 +232,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 1483569961148528388}
-  mouseSensitivity: 400
+  mouseSensitivity: 600
+  canMove: 1
