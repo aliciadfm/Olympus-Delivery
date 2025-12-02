@@ -31,6 +31,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private bool canDoubleJump = false;
 
+    private float coyote = 0.2f;
+    private float coyoteCounter;
+
+    private float jumpBuffer = 0.2f;
+    private float jumpBufferCounter;
+
     public bool canMove = true;
 
     void Awake()
@@ -45,14 +51,32 @@ public class PlayerMovement : MonoBehaviour
 
         EnsureAbilityManager();
         UpdateGroundStatus();
-        HandleDash();
 
+        if (isGrounded)
+        {
+            coyoteCounter = coyote;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBuffer;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        HandleDash();
         if (isDashing) return;
 
         ReadMovementInput();
-        MovePlayer();
         HandleJump();
         ApplyGravity();
+        MovePlayer(); // Unificada con gravedad
     }
 
     private void EnsureAbilityManager()
@@ -95,18 +119,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        float currentSpeed = GetCurrentSpeed();
-        controller.Move(inputDirection * currentSpeed * Time.deltaTime);
+        Vector3 move = inputDirection * GetCurrentSpeed();
+        move.y = velocity.y;
+        controller.Move(move * Time.deltaTime);
     }
 
     private void HandleJump()
     {
-        if (isGrounded)
+        if (coyoteCounter > 0f)
         {
             canDoubleJump = true;
 
-            if (Input.GetButtonDown("Jump"))
+            if (jumpBufferCounter > 0f)
+            {
                 Jump();
+                coyoteCounter = 0f;
+                jumpBufferCounter = 0f;
+            }
         }
         else if (abilityManager.HasAbility(AbilityType.DoubleJump))
         {
@@ -126,7 +155,6 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyGravity()
     {
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
     }
 
     private void HandleDash()
@@ -161,7 +189,8 @@ public class PlayerMovement : MonoBehaviour
     {
         dashTimer -= Time.deltaTime;
 
-        controller.Move(transform.forward * dashForce * Time.deltaTime);
+        Vector3 dashDirection = inputDirection != Vector3.zero ? inputDirection : transform.forward;
+        controller.Move(dashDirection * dashForce * Time.deltaTime);
 
         if (dashTimer <= 0f)
             isDashing = false;
