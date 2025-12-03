@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 4386778827575245686}
   - component: {fileID: 1206891328533793718}
   - component: {fileID: 2034329843254369460}
+  - component: {fileID: 8681129210660676154}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -234,3 +235,23 @@ MonoBehaviour:
   playerBody: {fileID: 1483569961148528388}
   mouseSensitivity: 600
   canMove: 1
+--- !u!114 &8681129210660676154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258834178766413374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe75cf659eb0e2a46b9c6025ccead52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 3
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  interactableTag: interactuable
+  interactKey: 101
+  indicatorText: {fileID: 0}
+  defaultHint: Puedes interactuar
