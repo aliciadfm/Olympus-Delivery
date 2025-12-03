@@ -55,13 +55,19 @@ namespace SlimUI.ModernMenu
         public AudioSource hoverSound;
         public AudioSource sliderSound;
         public AudioSource swooshSound;
+        public AudioSource splashIntroSource;
 
         Coroutine autoOpenMainRoutine;
         public float autoOpenDelay = 5f;
-        bool mainOpened = false;
+        bool mainOpened = false; 
+		
 
         void Start()
         {
+            if (splashIntroSource && !splashIntroSource.isPlaying)
+            {
+                splashIntroSource.Play();
+            }
             CameraObject = GetComponent<Animator>();
             if (animation) animation.SetActive(true);
             if (playMenu) playMenu.SetActive(false);
