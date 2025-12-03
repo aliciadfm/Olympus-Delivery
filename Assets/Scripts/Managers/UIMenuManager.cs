@@ -11,11 +11,12 @@ namespace SlimUI.ModernMenu
         private Animator CameraObject;
 
         [Header("MENUS")]
+        public GameObject animation;
         public GameObject mainMenu;
         public GameObject firstMenu;
         public GameObject playMenu;
         public GameObject exitMenu;
-        public GameObject creditsMenu;   // NUEVO
+        public GameObject creditsMenu;   
         public GameObject extrasMenu;
 
         public enum Theme { custom1, custom2, custom3 };
@@ -55,15 +56,22 @@ namespace SlimUI.ModernMenu
         public AudioSource sliderSound;
         public AudioSource swooshSound;
 
+        Coroutine autoOpenMainRoutine;
+        public float autoOpenDelay = 5f;
+        bool mainOpened = false;
+
         void Start()
         {
             CameraObject = GetComponent<Animator>();
+            if (animation) animation.SetActive(true);
             if (playMenu) playMenu.SetActive(false);
             if (exitMenu) exitMenu.SetActive(false);
             if (extrasMenu) extrasMenu.SetActive(false);
             if (creditsMenu) creditsMenu.SetActive(false);
             if (firstMenu) firstMenu.SetActive(true);
-            if (mainMenu) mainMenu.SetActive(true);
+            if (mainMenu) mainMenu.SetActive(false);
+            mainOpened = false;
+            autoOpenMainRoutine = StartCoroutine(AutoOpenMainAfterDelay());
             SetThemeColors();
         }
 
@@ -92,7 +100,36 @@ namespace SlimUI.ModernMenu
             }
         }
 
-        // NUEVOS MÉTODOS
+        IEnumerator AutoOpenMainAfterDelay()
+        {
+            float t = 0f;
+            while (t < autoOpenDelay && !mainOpened)
+            {
+                t += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            if (!mainOpened)
+            {
+                OpenMain();
+            }
+        }
+
+        public void OpenMain()
+        {
+            if (mainOpened) return;        
+            mainOpened = true;
+
+            if (autoOpenMainRoutine != null)
+            {
+                StopCoroutine(autoOpenMainRoutine);
+                autoOpenMainRoutine = null;
+            }
+
+            if (animation) animation.SetActive(false);
+            if (mainMenu) mainMenu.SetActive(true);
+        }
+
         public void OpenCredits()
         {
             if (playMenu) playMenu.SetActive(false);
