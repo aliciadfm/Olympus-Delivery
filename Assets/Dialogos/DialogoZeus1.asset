@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Zeus
   sentences:
-  - Por fin te despiertas mortal.
+  - Por fin te veo, mortal.
   - "\xA1Felicidades, has sido ascendido a becario divino!"
   - "Ver\xE1s, nosotros los Dioses, necesitamos tu ayuda. Llevamos demasiado tiempo
     arrastrando problemas."
@@ -33,4 +33,5 @@ MonoBehaviour:
   - "Uno de mis templos a\xFAn tiene restos de la \xFAltima fiesta que di. Elim\xEDnala."
   - "En el otro est\xE1 Hermes. P\xEDdele de mi parte que te ese\xF1e a viajar entre
     planetas. Creo que se alegrar\xE1 de tener unas vacaciones."
-  - Ven a hablar conmigo cuando termines.
+  - "Ven a hablar conmigo cuando termines. E intenta ir m\xE1s r\xE1pido pulsando
+    Shift o algo."
