@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuPause : MonoBehaviour
 {
-    public GameObject pauseCanvas;         
+    public GameObject pauseCanvas;
     public string mainMenuScene = "MenuPrincipal";
 
     public MonoBehaviour[] scriptsToDisable;
@@ -60,6 +60,11 @@ public class MenuPause : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            Destroy(player);
+
         SceneManager.LoadScene(mainMenuScene);
     }
 }

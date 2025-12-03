@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MenuPrincipal.unity
+    guid: b0b32faf14ed331489e897f60e7f0d20
+  - enabled: 1
     path: Assets/Scenes/PlanetaZeus.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
