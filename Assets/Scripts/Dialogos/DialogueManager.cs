@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text npcNameText;
     public TMP_Text dialogueText;
 
+
     private string[] sentences;
     private int index = 0;
     private bool isDialogueActive = false;

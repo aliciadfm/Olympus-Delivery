@@ -1,16 +1,32 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HeadLookAtPlayer : MonoBehaviour
 {
     public Transform headBone;
-    public Transform player;
+    private Transform player;
     public float turnSpeed = 5f;
     public float maxAngle = 60f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     bool isTalking = false;
 
+    void Start()
+    {   
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+            player = playerObj.transform;
+    }
+
     void LateUpdate()
     {
+        if(player.IsUnityNull())
+        {
+            GameObject playerObj = GameObject.FindWithTag("Player");
+            if (playerObj != null) 
+            {
+                player = playerObj.transform;
+            }
+        }
         if (!isTalking) return;
 
         // Dirección hacia el jugador

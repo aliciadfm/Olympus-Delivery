@@ -13,6 +13,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("UI de interacción")]
     public GameObject pressEIndicator;
 
+    [Header("Cabeza del NPC")]
+    public HeadLookAtPlayer headLookAtPlayer;
+
     private Transform playerCamera;
 
     void Start()
@@ -23,6 +26,8 @@ public class DialogueTrigger : MonoBehaviour
         if (pressEIndicator != null)
             pressEIndicator.SetActive(false);
     }
+
+
 
     void Update()
     {
@@ -59,10 +64,21 @@ public class DialogueTrigger : MonoBehaviour
 
     private void StartDialogue()
     {
-        if (dialogueSequence.Length == 0) return;
+        if (dialogueSequence.Length == 0) {
+            if (headLookAtPlayer != null) 
+            {
+                headLookAtPlayer.EndDialogue();
+            }
+            return;
+        }
 
         DialogueData currentDialogue = dialogueSequence[dialogueIndex];
         DialogueManager.Instance.StartDialogue(currentDialogue);
+
+        if (headLookAtPlayer != null) 
+        {
+            headLookAtPlayer.StartDialogue();
+        }
 
         dialogueIndex++;
 
