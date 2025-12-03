@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         abilityManager = FindAnyObjectByType<AbilityManager>();
+        abilityManager.Unlock(AbilityType.Run);
     }
 
     void Update()
