@@ -7,6 +7,7 @@ public class InteracionManager : MonoBehaviour
     public int maxIndex = 1;
     public AnuncioManager anuncioManager;
     public string anuncio = "";
+    private string anuncio2 = " Basura recogida: ";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,9 +23,13 @@ public class InteracionManager : MonoBehaviour
     public void AumentarIndex()
     {
         index++;
-        if(index >= maxIndex)
+        if (index == maxIndex)
         {
-                        anuncioManager.MostrarAnuncio(anuncio);
+            anuncioManager.MostrarAnuncio(anuncio);
+        }
+        else
+        {
+            anuncioManager.MostrarAnuncio(anuncio2 + index + " de " + maxIndex);
         }
     }
 }

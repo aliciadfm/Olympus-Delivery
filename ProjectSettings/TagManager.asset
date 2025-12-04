@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - interactuable
+  - antorcha
   layers:
   - Default
   - TransparentFX
