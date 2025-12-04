@@ -111,35 +111,38 @@ public class DialogueManager : MonoBehaviour
     }
 
     private IEnumerator EndDialogueSmooth()
+{
+    isDialogueActive = false;
+    dialogueUI.SetActive(false);
+
+    if (engagedNPC != null)
     {
-        isDialogueActive = false;
-        dialogueUI.SetActive(false);
+        // 🔹 AVISAMOS AL NPC DE QUE EL DIÁLOGO TERMINÓ
+        HeadLookAtPlayer lookAt = engagedNPC.GetComponent<HeadLookAtPlayer>();
+        if (lookAt == null)
+            lookAt = engagedNPC.GetComponentInChildren<HeadLookAtPlayer>();
 
-        // Rehabilitamos la interacción del NPC que inició el diálogo (si aplica)
-        if (engagedNPC != null)
-        {
-            DialogueTrigger trigger = engagedNPC.GetComponent<DialogueTrigger>();
-            if (trigger != null)
-            {
-                trigger.SetInteractionEnabled(true);
-            }
-            else
-            {
-                trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
-                if (trigger != null)
-                    trigger.SetInteractionEnabled(true);
-            }
+        if (lookAt != null)
+            lookAt.EndDialogue();
 
-            engagedNPC = null;
-        }
+        DialogueTrigger trigger = engagedNPC.GetComponent<DialogueTrigger>();
+        if (trigger == null)
+            trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
 
-        yield return null;
+        if (trigger != null)
+            trigger.SetInteractionEnabled(true);
 
-        if (playerMovement != null)
-            playerMovement.canMove = true;
-        if (cameraMovement != null)
-            cameraMovement.canMove = true;
+        engagedNPC = null;
     }
+
+    yield return null;
+
+    if (playerMovement != null)
+        playerMovement.canMove = true;
+    if (cameraMovement != null)
+        cameraMovement.canMove = true;
+}
+
 
     void Update()
     {
