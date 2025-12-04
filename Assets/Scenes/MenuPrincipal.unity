@@ -2520,6 +2520,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1319353626}
     - target: {fileID: 114064580186609504, guid: 72743ef12d244f244b6885f84968ea34, type: 3}
+      propertyPath: autoOpenDelay
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114064580186609504, guid: 72743ef12d244f244b6885f84968ea34, type: 3}
       propertyPath: splashIntroSource
       value: 
       objectReference: {fileID: 1540444599}
