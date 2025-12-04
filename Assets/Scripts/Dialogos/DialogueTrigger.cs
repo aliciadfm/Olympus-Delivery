@@ -117,4 +117,5 @@ public class DialogueTrigger : MonoBehaviour
         if (!interactionEnabled && pressEIndicator != null && pressEIndicator.activeSelf)
             pressEIndicator.SetActive(false);
     }
+
 }
