@@ -18,26 +18,34 @@ public class DialogueTrigger : MonoBehaviour
 
     private Transform playerCamera;
 
+    // Nueva bandera para habilitar/deshabilitar interacción sin desactivar el GameObject
+    private bool interactionEnabled = true;
+
     void Start()
     {
         // Se asume que la cámara del jugador tiene el tag MainCamera
-        playerCamera = Camera.main.transform;
+        playerCamera = Camera.main?.transform;
 
         if (pressEIndicator != null)
             pressEIndicator.SetActive(false);
     }
 
-
-
     void Update()
     {
-        if (playerCamera == null) return;
+        if (playerCamera == null)
+        {
+            playerCamera = Camera.main?.transform;
+            if (playerCamera == null) return;
+        }
 
-        bool canInteract = IsPlayerLookingAtNPC() && !DialogueManager.Instance.IsDialogueActive;
+        // Protect against DialogueManager being missing in scene
+        bool dialogueSystemAvailable = DialogueManager.Instance != null;
+
+        bool canInteract = interactionEnabled && IsPlayerLookingAtNPC() && dialogueSystemAvailable && !DialogueManager.Instance.IsDialogueActive;
 
         if (canInteract)
         {
-            if (!pressEIndicator.activeSelf)
+            if (pressEIndicator != null && !pressEIndicator.activeSelf)
                 pressEIndicator.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -45,7 +53,7 @@ public class DialogueTrigger : MonoBehaviour
         }
         else
         {
-            if (pressEIndicator.activeSelf)
+            if (pressEIndicator != null && pressEIndicator.activeSelf)
                 pressEIndicator.SetActive(false);
         }
     }
@@ -56,7 +64,11 @@ public class DialogueTrigger : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactionLayer))
         {
-            return hit.transform == transform;
+            // The raycast might hit a child collider (e.g. a head or body collider), so check IsChildOf
+            Transform hitTransform = hit.collider != null ? hit.collider.transform : hit.transform;
+
+            if (hitTransform == transform || hitTransform.IsChildOf(transform))
+                return true;
         }
 
         return false;
@@ -64,8 +76,8 @@ public class DialogueTrigger : MonoBehaviour
 
     private void StartDialogue()
     {
-        if (dialogueSequence.Length == 0) {
-            if (headLookAtPlayer != null) 
+        if (dialogueSequence == null || dialogueSequence.Length == 0) {
+            if (headLookAtPlayer != null)
             {
                 headLookAtPlayer.EndDialogue();
             }
@@ -73,9 +85,10 @@ public class DialogueTrigger : MonoBehaviour
         }
 
         DialogueData currentDialogue = dialogueSequence[dialogueIndex];
-        DialogueManager.Instance.StartDialogue(currentDialogue);
+        // Pass this specific NPC gameObject so DialogueManager knows which NPC started the dialogue
+        DialogueManager.Instance.StartDialogue(currentDialogue, gameObject);
 
-        if (headLookAtPlayer != null) 
+        if (headLookAtPlayer != null)
         {
             headLookAtPlayer.StartDialogue();
         }
@@ -84,5 +97,13 @@ public class DialogueTrigger : MonoBehaviour
 
         if (dialogueIndex >= dialogueSequence.Length)
             dialogueIndex = dialogueSequence.Length - 1;
+    }
+
+    // Método público para activar/desactivar la interacción sin desactivar el GameObject
+    public void SetInteractionEnabled(bool enabled)
+    {
+        interactionEnabled = enabled;
+        if (!interactionEnabled && pressEIndicator != null && pressEIndicator.activeSelf)
+            pressEIndicator.SetActive(false);
     }
 }

@@ -10,7 +10,6 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text npcNameText;
     public TMP_Text dialogueText;
 
-
     private string[] sentences;
     private int index = 0;
     private bool isDialogueActive = false;
@@ -20,7 +19,7 @@ public class DialogueManager : MonoBehaviour
     public bool IsDialogueActive => isDialogueActive;
     private PlayerMovement playerMovement;
     private CameraMovement cameraMovement;
-    public GameObject hermes;
+    private GameObject engagedNPC; // the NPC currently engaged in dialogue
     public float typingSpeed = 0.05f;
 
     void Awake()
@@ -37,7 +36,8 @@ public class DialogueManager : MonoBehaviour
         cameraMovement = FindAnyObjectByType<CameraMovement>();
     }
 
-    public void StartDialogue(DialogueData dialogue)
+    // Accept an optional engagedNPC so the trigger can pass which NPC started the dialogue
+    public void StartDialogue(DialogueData dialogue, GameObject engagedNPC = null)
     {
         if (isDialogueActive) return;
 
@@ -50,6 +50,25 @@ public class DialogueManager : MonoBehaviour
             playerMovement.canMove = false;
         if (cameraMovement != null)
             cameraMovement.canMove = false;
+
+        // Store the NPC that started the dialogue so we can disable only interaction (not visibility)
+        this.engagedNPC = engagedNPC;
+        if (this.engagedNPC != null)
+        {
+            // En lugar de desactivar todo el GameObject, deshabilitamos sólo la interacción del DialogueTrigger
+            DialogueTrigger trigger = this.engagedNPC.GetComponent<DialogueTrigger>();
+            if (trigger != null)
+            {
+                trigger.SetInteractionEnabled(false);
+            }
+            else
+            {
+                // Si no hay DialogueTrigger directamente en el root, buscamos en hijos (por si el trigger está en un hijo)
+                trigger = this.engagedNPC.GetComponentInChildren<DialogueTrigger>();
+                if (trigger != null)
+                    trigger.SetInteractionEnabled(false);
+            }
+        }
 
         isDialogueActive = true;
         dialogueUI.SetActive(true);
@@ -95,7 +114,24 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = false;
         dialogueUI.SetActive(false);
-        hermes.SetActive(true);
+
+        // Rehabilitamos la interacción del NPC que inició el diálogo (si aplica)
+        if (engagedNPC != null)
+        {
+            DialogueTrigger trigger = engagedNPC.GetComponent<DialogueTrigger>();
+            if (trigger != null)
+            {
+                trigger.SetInteractionEnabled(true);
+            }
+            else
+            {
+                trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
+                if (trigger != null)
+                    trigger.SetInteractionEnabled(true);
+            }
+
+            engagedNPC = null;
+        }
 
         yield return null;
 
