@@ -1447,7 +1447,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Desarrolladores:\n\xB7Alicia de Felipe Machancoses\n\xB7Pau Mart\xEDnez
     Lled\xF3\n\xB7Unay David Figueroa\n\xB7Denis Rafael Roda Hector\n\n-Assests by:
-    jeremy, Isa Lousberg, SlimUI Solutions"
+    SlimUI Solutions"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e1e1d234076ef84f8969c5d038099be, type: 2}
   m_sharedMaterial: {fileID: -1171110563952719467, guid: 7e1e1d234076ef84f8969c5d038099be, type: 2}
@@ -2498,6 +2498,14 @@ PrefabInstance:
     - target: {fileID: 114008702978989266, guid: 72743ef12d244f244b6885f84968ea34, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
       value: 1801810542
+      objectReference: {fileID: 0}
+    - target: {fileID: 114043147214318076, guid: 72743ef12d244f244b6885f84968ea34, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31f111da2c906c04cb899d90b5d17ce2, type: 2}
+    - target: {fileID: 114043147214318076, guid: 72743ef12d244f244b6885f84968ea34, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114064580186609504, guid: 72743ef12d244f244b6885f84968ea34, type: 3}
       propertyPath: animation

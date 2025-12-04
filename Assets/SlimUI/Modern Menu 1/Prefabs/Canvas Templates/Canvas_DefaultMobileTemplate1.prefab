@@ -11075,6 +11075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bc16ca95894c34b836ea33671ae46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animation: {fileID: 0}
   mainMenu: {fileID: 1453157175051456}
   firstMenu: {fileID: 1453157175051456}
   playMenu: {fileID: 1375944574801644}
@@ -11106,6 +11107,8 @@ MonoBehaviour:
   hoverSound: {fileID: 82315822475795872}
   sliderSound: {fileID: 82724292702034864}
   swooshSound: {fileID: 82911278192422818}
+  splashIntroSource: {fileID: 0}
+  autoOpenDelay: 5
 --- !u!114 &114459603972415404
 MonoBehaviour:
   m_ObjectHideFlags: 0
