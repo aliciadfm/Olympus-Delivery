@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class InteractionRaycaster : MonoBehaviour
     private Camera camara;
     private TMP_Text indicatorText;
     private GameObject objetoActual;
+
+
     private const string preferredIndicatorName = "TextInteracturar";
 
     void Start()
@@ -78,6 +81,31 @@ public class InteractionRaycaster : MonoBehaviour
                     objetoActual.SetActive(false);
                     indicatorText.gameObject.SetActive(false);
                     interacionManager.AumentarIndex();
+                }
+                return;
+            }
+            if (hit.collider.CompareTag("antorcha"))
+            {
+                objetoActual = hit.collider.gameObject;
+                indicatorText.gameObject.SetActive(true);
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Transform parent = objetoActual.transform.parent;
+                    GameObject pCube361 = parent.Find("pCube361").gameObject;
+
+                    if (pCube361.activeSelf == true)
+                    {
+                        indicatorText.gameObject.SetActive(false);
+                        return;
+                    }
+
+                    pCube361.SetActive(true);
+
+                    indicatorText.gameObject.SetActive(false);
+                    interacionManager.AumentarDoubleIndex();
+
+                    Debug.Log("Activated pCube361");
                 }
                 return;
             }
