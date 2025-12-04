@@ -16,6 +16,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Cabeza del NPC")]
     public HeadLookAtPlayer headLookAtPlayer;
 
+    [Header("Animator del NPC")]
+    public Animator npcAnimator;
+
     private Transform playerCamera;
 
     // Nueva bandera para habilitar/deshabilitar interacción sin desactivar el GameObject
@@ -28,6 +31,9 @@ public class DialogueTrigger : MonoBehaviour
 
         if (pressEIndicator != null)
             pressEIndicator.SetActive(false);
+
+        if (npcAnimator == null)
+            npcAnimator = GetComponent<Animator>();
     }
 
     void Update()
@@ -91,6 +97,11 @@ public class DialogueTrigger : MonoBehaviour
         if (headLookAtPlayer != null)
         {
             headLookAtPlayer.StartDialogue();
+        }
+
+        if (npcAnimator != null)
+        {
+            npcAnimator.SetTrigger("StartHeadTurn");  
         }
 
         dialogueIndex++;
