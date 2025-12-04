@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
 
     public bool canMove = true;
+    public RunScreenEffect runScreenEffect;
 
     void Awake()
     {
@@ -170,6 +171,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (isDashing)
             ExecuteDash();
+    }
+
+    private float GetCurrentSpeed()
+    {
+        float currentSpeed = speed;
+
+        bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && inputDirection.sqrMagnitude > 0.01f;
+        bool canRun = abilityManager.HasAbility(AbilityType.Run);
+
+        bool isRunning = canRun && wantsToRun;
+
+        if (isRunning)
+            currentSpeed *= sprintMultiplier;
+
+        if (runScreenEffect)
+            runScreenEffect.SetRunning(isRunning);   
+
+        return currentSpeed;
     }
 
     private bool CanStartDash()
