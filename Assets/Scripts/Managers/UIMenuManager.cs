@@ -58,7 +58,7 @@ namespace SlimUI.ModernMenu
         public AudioSource splashIntroSource;
 
         Coroutine autoOpenMainRoutine;
-        public float autoOpenDelay = 5f;
+        public float autoOpenDelay = 15f;
         bool mainOpened = false; 
 		
 

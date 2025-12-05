@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
 
     public bool canMove = true;
+    public RunScreenEffect runScreenEffect;
 
     void Awake()
     {

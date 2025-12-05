@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class HeadLookAtPlayer : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class HeadLookAtPlayer : MonoBehaviour
     public float turnSpeed = 5f;
     public float maxAngle = 60f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    bool isTalking = false;
+    public float stopLookingAfterSeconds = 30f;
+    private Coroutine stopLookCoroutine;
+    private bool isTalking = false;
 
     void Start()
     {   
@@ -52,15 +55,34 @@ public class HeadLookAtPlayer : MonoBehaviour
         return target;
     }
 
-    public void StartDialogue()
-    {
-        isTalking = true;
-    }
 
-    public void EndDialogue()
+public void StartDialogue()
+{
+    isTalking = true;
+
+    if (stopLookCoroutine != null)
     {
-        isTalking = false;
+        StopCoroutine(stopLookCoroutine);
+        stopLookCoroutine = null;
     }
+}
+
+public void EndDialogue()
+{
+    if (stopLookCoroutine != null)
+        StopCoroutine(stopLookCoroutine);
+
+    stopLookCoroutine = StartCoroutine(StopLookingAfterDelay());
+}
+
+private IEnumerator StopLookingAfterDelay()
+{
+    yield return new WaitForSeconds(stopLookingAfterSeconds);
+    isTalking = false;
+    stopLookCoroutine = null;
+}
+
 
 
 }
+
