@@ -18,6 +18,13 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 1f;
 
+    // === DIOS MODE ===
+    [Header("Modo Dios")]
+    public float godModeSpeed = 10f;
+    public KeyCode godModeToggleKey = KeyCode.C;
+
+    private bool godMode = false;
+
     private bool isDashing = false;
     private float dashTimer = 0f;
     private float dashCooldownTimer = 0f;
@@ -48,35 +55,69 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!canMove) return;
+        if (Input.GetKeyDown(godModeToggleKey))
+            ToggleGodMode();
+
+        if (!canMove)
+            return;
+
+        if (godMode)
+        {
+            GodModeMovement();
+            return;
+        }
 
         UpdateGroundStatus();
 
         if (isGrounded)
-        {
             coyoteCounter = coyote;
-        }
         else
-        {
             coyoteCounter -= Time.deltaTime;
-        }
 
         if (Input.GetButtonDown("Jump"))
-        {
             jumpBufferCounter = jumpBuffer;
-        }
         else
-        {
             jumpBufferCounter -= Time.deltaTime;
-        }
 
         HandleDash();
-        if (isDashing) return;
+        if (isDashing)
+            return;
 
         ReadMovementInput();
         HandleJump();
         ApplyGravity();
         MovePlayer();
+    }
+
+    private void ToggleGodMode()
+    {
+        godMode = !godMode;
+        velocity = Vector3.zero;
+    }
+
+    private void GodModeMovement()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+
+        float y = 0f;
+        if (Input.GetKey(KeyCode.Space)) y = 1f;
+        if (Input.GetKey(KeyCode.LeftControl)) y = -1f;
+
+        Vector3 move =
+            transform.right * x +
+            transform.forward * z +
+            Vector3.up * y;
+
+        if (move.sqrMagnitude > 1f)
+            move.Normalize();
+
+        float currentSpeed = godModeSpeed;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+            currentSpeed *= sprintMultiplier;
+
+        controller.Move(move * currentSpeed * Time.deltaTime);
     }
 
     private void UpdateGroundStatus()
@@ -188,5 +229,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (dashTimer <= 0f)
             isDashing = false;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("Lava"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
