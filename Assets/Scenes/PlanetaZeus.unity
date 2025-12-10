@@ -41452,6 +41452,7 @@ MonoBehaviour:
   dialogueSequence:
   - {fileID: 11400000, guid: 42906fdd532c27e4983f8b63f16fafb3, type: 2}
   - {fileID: 11400000, guid: 52beb90c766a067488fb2ec1340b07bb, type: 2}
+  - {fileID: 11400000, guid: 67f12237847084344a0114a159fd1ab5, type: 2}
   interactionDistance: 6
   interactionLayer:
     serializedVersion: 2
