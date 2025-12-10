@@ -5,12 +5,23 @@ using System.Collections;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    private enum QuestionPhase
+    {
+        ShowingQuestionText,
+        ShowingOptions
+    }
+    private QuestionPhase questionPhase;
 
     public GameObject dialogueUI;
     public TMP_Text npcNameText;
     public TMP_Text dialogueText;
+    public TMP_Text pressSpaceTip;
 
-    private string[] sentences;
+    [Header("UI – Opciones")]
+    public GameObject optionsPanel;
+    public TMP_Text[] optionTexts;
+    private DialogueNode[] nodes;
+    private DialogueNode currentNode;
     private int index = 0;
     private bool isDialogueActive = false;
     private bool isTyping = false;
@@ -19,7 +30,7 @@ public class DialogueManager : MonoBehaviour
     public bool IsDialogueActive => isDialogueActive;
     private PlayerMovement playerMovement;
     private CameraMovement cameraMovement;
-    private GameObject engagedNPC; // the NPC currently engaged in dialogue
+    private GameObject engagedNPC;
     public float typingSpeed = 0.05f;
 
     void Awake()
@@ -74,26 +85,89 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(true);
         npcNameText.text = dialogue.npcName;
 
-        sentences = dialogue.sentences;
+        nodes = dialogue.nodes;
         index = 0;
-        ShowNextSentence();
+        ShowNextNode();
     }
 
-    public void ShowNextSentence()
+    void ShowNextNode()
     {
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        if (index < sentences.Length)
+        if (index >= nodes.Length)
         {
-            currentSentence = sentences[index];
+            StartCoroutine(EndDialogueSmooth());
+            return;
+        }
+
+        currentNode = nodes[index];
+
+        if (currentNode.type == DialogueNodeType.Sentence)
+        {
+            optionsPanel.SetActive(false);
+            dialogueText.gameObject.SetActive(true);
+            pressSpaceTip.gameObject.SetActive(true);
+            currentSentence = currentNode.sentence;
             typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
             index++;
         }
+        else if (currentNode.type == DialogueNodeType.Question)
+        {
+            optionsPanel.SetActive(false);
+
+            dialogueText.gameObject.SetActive(true);
+            pressSpaceTip.gameObject.SetActive(true);
+
+            currentSentence = currentNode.sentence;
+            questionPhase = QuestionPhase.ShowingQuestionText;
+
+            typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
+        }
+    }
+    void ShowOptions(DialogueOption[] options)
+    {
+        optionsPanel.SetActive(true);
+
+        for (int i = 0; i < optionTexts.Length; i++)
+        {
+            optionTexts[i].transform.parent.gameObject.SetActive(i < options.Length);
+            optionTexts[i].text = options[i].optionText;
+
+            int capturedIndex = i;
+            optionTexts[i]
+                .GetComponentInParent<UnityEngine.UI.Button>()
+                .onClick.RemoveAllListeners();
+
+            optionTexts[i]
+                .GetComponentInParent<UnityEngine.UI.Button>()
+                .onClick.AddListener(() => SelectOption(capturedIndex));
+        }
+    }
+
+    void SelectOption(int optionIndex)
+    {
+        DialogueOption option = currentNode.options[optionIndex];
+        optionsPanel.SetActive(false);
+
+        if (option.isCorrect)
+        {
+            LockCursor();
+            index++;
+            ShowNextNode();
+        }
         else
         {
-            StartCoroutine(EndDialogueSmooth());
+            StartCoroutine(WrongAnswerRoutine(option.responseIfWrong));
         }
+    }
+
+    IEnumerator WrongAnswerRoutine(string response)
+    {
+        dialogueText.gameObject.SetActive(true);
+        pressSpaceTip.gameObject.SetActive(true);
+
+        dialogueText.text = "";
+        yield return StartCoroutine(TypeSentence(response));
+
+        questionPhase = QuestionPhase.ShowingQuestionText;
     }
 
     private IEnumerator TypeSentence(string sentence)
@@ -111,37 +185,39 @@ public class DialogueManager : MonoBehaviour
     }
 
     private IEnumerator EndDialogueSmooth()
-{
-    isDialogueActive = false;
-    dialogueUI.SetActive(false);
-
-    if (engagedNPC != null)
     {
-        // 🔹 AVISAMOS AL NPC DE QUE EL DIÁLOGO TERMINÓ
-        HeadLookAtPlayer lookAt = engagedNPC.GetComponent<HeadLookAtPlayer>();
-        if (lookAt == null)
-            lookAt = engagedNPC.GetComponentInChildren<HeadLookAtPlayer>();
+        isDialogueActive = false;
+        optionsPanel.SetActive(false);
+        dialogueText.gameObject.SetActive(false);
+        pressSpaceTip.gameObject.SetActive(false);
+        dialogueUI.SetActive(false);
 
-        if (lookAt != null)
-            lookAt.EndDialogue();
+        if (engagedNPC != null)
+        {
+            HeadLookAtPlayer lookAt = engagedNPC.GetComponent<HeadLookAtPlayer>();
+            if (lookAt == null)
+                lookAt = engagedNPC.GetComponentInChildren<HeadLookAtPlayer>();
 
-        DialogueTrigger trigger = engagedNPC.GetComponent<DialogueTrigger>();
-        if (trigger == null)
-            trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
+            if (lookAt != null)
+                lookAt.EndDialogue();
 
-        if (trigger != null)
-            trigger.SetInteractionEnabled(true);
+            DialogueTrigger trigger = engagedNPC.GetComponent<DialogueTrigger>();
+            if (trigger == null)
+                trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
 
-        engagedNPC = null;
+            if (trigger != null)
+                trigger.SetInteractionEnabled(true);
+
+            engagedNPC = null;
+        }
+
+        yield return null;
+
+        if (playerMovement != null)
+            playerMovement.canMove = true;
+        if (cameraMovement != null)
+            cameraMovement.canMove = true;
     }
-
-    yield return null;
-
-    if (playerMovement != null)
-        playerMovement.canMove = true;
-    if (cameraMovement != null)
-        cameraMovement.canMove = true;
-}
 
 
     void Update()
@@ -154,9 +230,21 @@ public class DialogueManager : MonoBehaviour
                 dialogueText.text = currentSentence;
                 isTyping = false;
             }
-            else
+            else if (currentNode.type == DialogueNodeType.Sentence)
             {
-                ShowNextSentence();
+                ShowNextNode();
+            }
+            else if (currentNode.type == DialogueNodeType.Question
+                    && questionPhase == QuestionPhase.ShowingQuestionText)
+            {
+                // Cambio de fase
+                dialogueText.gameObject.SetActive(false);
+                pressSpaceTip.gameObject.SetActive(false);
+
+                optionsPanel.SetActive(true);
+                ShowOptions(currentNode.options);
+                UnlockCursor();
+                questionPhase = QuestionPhase.ShowingOptions;
             }
         }
 
@@ -164,5 +252,17 @@ public class DialogueManager : MonoBehaviour
             playerMovement = FindAnyObjectByType<PlayerMovement>();
         if (cameraMovement == null)
             cameraMovement = FindAnyObjectByType<CameraMovement>();
+    }
+
+    void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

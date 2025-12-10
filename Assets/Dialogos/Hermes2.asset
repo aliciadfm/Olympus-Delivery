@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Hermes2
   m_EditorClassIdentifier: 
   npcName: Hermes
-  sentences:
-  - "Suerte colega, la necesitar\xE1s."
+  nodes:
+  - type: 0
+    sentence: "Suerte colega, la necesitar\xE1s."
+    options: []

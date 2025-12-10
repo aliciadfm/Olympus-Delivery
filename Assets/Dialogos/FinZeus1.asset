@@ -13,12 +13,25 @@ MonoBehaviour:
   m_Name: FinZeus1
   m_EditorClassIdentifier: 
   npcName: Zeus
-  sentences:
-  - "Has hecho un trabajo excelente. \xA1Felicidades, est\xE1s contratado!"
-  - "Ya est\xE1s listo para asistir a los Dioses veinticuatro horas al d\xEDa, siete
-    d\xEDas a la semana."
-  - "No te preocupes por comer y dormir. Te he hecho un semisemidi\xF3s becario para
-    que no tengas que preocuparte de eso."
-  - "Tu pago ser\xE1 el del humano promedio; creo que eso es a lo que est\xE1s acostumrbado."
-  - Me ha sorprendido que sea tan poco.
-  - "M\xE1rchate al siguiente planeta cuando est\xE9s listo."
+  nodes:
+  - type: 0
+    sentence: "Has hecho un trabajo excelente. \xA1Felicidades, est\xE1s contratado!"
+    options: []
+  - type: 0
+    sentence: "Ya est\xE1s listo para asistir a los Dioses veinticuatro horas al
+      d\xEDa, siete d\xEDas a la semana."
+    options: []
+  - type: 0
+    sentence: "No te preocupes por comer y dormir. Te he hecho un semisemidi\xF3s
+      becario para que no tengas que preocuparte de eso."
+    options: []
+  - type: 0
+    sentence: "Tu pago ser\xE1 el del humano promedio; creo que eso es a lo que est\xE1s
+      acostumrbado."
+    options: []
+  - type: 0
+    sentence: Me ha sorprendido que sea tan poco.
+    options: []
+  - type: 0
+    sentence: "M\xE1rchate al siguiente planeta cuando est\xE9s listo."
+    options: []

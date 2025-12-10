@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
-
 public class InteractionRaycaster : MonoBehaviour
 {
     public float distancia = 3f;
@@ -10,7 +9,6 @@ public class InteractionRaycaster : MonoBehaviour
     private Camera camara;
     private TMP_Text indicatorText;
     private GameObject objetoActual;
-
 
     private const string preferredIndicatorName = "TextInteracturar";
 
@@ -60,8 +58,6 @@ public class InteractionRaycaster : MonoBehaviour
 
         if (indicatorText != null)
             indicatorText.gameObject.SetActive(false);
-        else
-            Debug.LogWarning("[InteractionRaycaster] No se encontró ningún TMP_Text para usar como indicador. Crea uno llamado '" + preferredIndicatorName + "' o asígnalo manualmente.");
     }
 
     void Update()
@@ -101,11 +97,25 @@ public class InteractionRaycaster : MonoBehaviour
                     }
 
                     pCube361.SetActive(true);
-
+                    objetoActual.tag = "Untagged";
                     indicatorText.gameObject.SetActive(false);
                     interacionManager.AumentarDoubleIndex();
+                }
+                return;
+            }
+            if (hit.collider.CompareTag("basura") && interacionManager.todasBasuraRecogida)
+            {
+                objetoActual = hit.collider.gameObject;
+                indicatorText.gameObject.SetActive(true);
 
-                    Debug.Log("Activated pCube361");
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Transform parent = objetoActual.transform.parent;
+                    parent.Find("Trash box").gameObject.tag = "Untagged";
+                    parent.Find("Trash cap").gameObject.tag = "Untagged";
+                    indicatorText.gameObject.SetActive(false);
+                    interacionManager.BasuraRecogida();
+                    objetoActual.tag = "Untagged";
                 }
                 return;
             }

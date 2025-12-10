@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: DialogoZues2
   m_EditorClassIdentifier: 
   npcName: Zeus
-  sentences:
-  - "\xBFQue m\xE1s quieres que te explique?\n\xBFC\xF3mo atarte zapatos?\nEspabila."
+  nodes:
+  - type: 0
+    sentence: "\xBFQue m\xE1s quieres que te explique?\n\xBFC\xF3mo atarte zapatos?\nEspabila."
+    options: []

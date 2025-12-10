@@ -13,17 +13,34 @@ MonoBehaviour:
   m_Name: Hermes1
   m_EditorClassIdentifier: 
   npcName: Hermes
-  sentences:
-  - "\xBFC\xF3mo has llegado hasta aqu\xED arriba?"
-  - "\xBFDe verdad eres t\xFA el nuevo becario? No me puedo creer que Zeus lo haya
-    hecho."
-  - "Siento pena por ti ahora mismo, pero no quiero tener que aguantar ning\xFAn
-    berrinche de esos Dioses egoc\xE9ntricos en un largo tiempo."
-  - "Toma mis botas, la necesitar\xE1s para salir del planeta. El portal para viajar
-    est\xE1 encima de este templo."
-  - "Pero est\xE1 desactivado. Enciende las antorchas para que Hestia sepa que quieres
-    viajar."
-  - "Mis botas te permitir\xE1n saltar en el aire. \xA1Pr\xFAebalo para llegar al
-    portal!"
-  - "Te debo una muy grande, colega. Si volvemos a vernos en mi planeta, te invitar\xE9
-    a la mejor ambros\xEDa del Olimpo."
+  nodes:
+  - type: 0
+    sentence: "\xBFC\xF3mo has llegado hasta aqu\xED arriba?"
+    options: []
+  - type: 0
+    sentence: "\xBFC\xF3mo has llegado hasta aqu\xED arriba?"
+    options: []
+  - type: 0
+    sentence: "\xBFDe verdad eres t\xFA el nuevo becario? No me puedo creer que Zeus
+      lo haya hecho."
+    options: []
+  - type: 0
+    sentence: "Siento pena por ti ahora mismo, pero no quiero tener que aguantar
+      ning\xFAn berrinche de esos Dioses egoc\xE9ntricos en un largo tiempo."
+    options: []
+  - type: 0
+    sentence: "Toma mis botas, las necesitar\xE1s para salir del planeta. El portal
+      para viajar est\xE1 encima de este templo."
+    options: []
+  - type: 0
+    sentence: "Pero est\xE1 desactivado. Enciende las antorchas para que Hestia sepa
+      que quieres viajar."
+    options: []
+  - type: 0
+    sentence: "Mis botas te permitir\xE1n saltar en el aire. \xA1Pr\xFAebalo para
+      llegar al portal!"
+    options: []
+  - type: 0
+    sentence: "Te debo una muy grande, colega. Si volvemos a vernos en mi planeta,
+      te invitar\xE9 a la mejor ambros\xEDa del Olimpo."
+    options: []

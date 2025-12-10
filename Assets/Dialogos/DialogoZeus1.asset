@@ -13,25 +13,56 @@ MonoBehaviour:
   m_Name: DialogoZeus1
   m_EditorClassIdentifier: 
   npcName: Zeus
-  sentences:
-  - Por fin te veo, mortal.
-  - "\xA1Felicidades, has sido ascendido a becario divino!"
-  - "Ver\xE1s, nosotros los Dioses, necesitamos tu ayuda. Llevamos demasiado tiempo
-    arrastrando problemas."
-  - "En nuestra \xFAltima reuni\xF3n decidimos que cada Dios tendr\xEDa su propio
-    espacio.\r\n\xA1Su propio planeta!"
-  - "Pero eso solo nos ha separado m\xE1s y nuestros problemas parecen ir a peor."
-  - "Y ah\xED es donde entras t\xFA. Quiero que vayas a cada planeta y ayudes a los
-    Dioses."
-  - "\xBFQu\xE9 dices, mortal? \xBFAceptas?"
-  - Realmente me da igual si aceptas o no, lo vas a hacer y punto, que de eso va
-    ser becario.
-  - "De normal, de esto se encargaba Hermes, pero cuando se lo coment\xE9, se enfad\xF3
-    conmigo y se fue a uno de mis \"templos\"."
-  - Dice que los recados no son trabajo del Dios mensajero.
-  - "Pero bueno, antes de mandarte a otro planeta tengo que ver si est\xE1s preparado."
-  - "Uno de mis templos a\xFAn tiene restos de la \xFAltima fiesta que di. Elim\xEDnala."
-  - "En el otro est\xE1 Hermes. P\xEDdele de mi parte que te ese\xF1e a viajar entre
-    planetas. Creo que se alegrar\xE1 de tener unas vacaciones."
-  - "Ven a hablar conmigo cuando termines. E intenta ir m\xE1s r\xE1pido pulsando
-    Shift o algo."
+  nodes:
+  - type: 0
+    sentence: Por fin te veo, mortal.
+    options: []
+  - type: 0
+    sentence: "\xA1Felicidades, has sido ascendido a becario divino!"
+    options: []
+  - type: 0
+    sentence: "Ver\xE1s, nosotros, los Dioses, necesitamos tu ayuda. Llevamos demasiado
+      tiempo arrastrando problemas."
+    options: []
+  - type: 0
+    sentence: "En nuestra \xFAltima reuni\xF3n decidimos que cada Dios tendr\xEDa
+      su propio espacio.\n\xA1Su propio planeta!"
+    options: []
+  - type: 0
+    sentence: "\"Pero eso solo nos ha separado m\xE1s y nuestros problemas parecen
+      ir a peor."
+    options: []
+  - type: 0
+    sentence: "Y ah\xED es donde entras t\xFA. Quiero que vayas a cada planeta y
+      ayudes a los Dioses."
+    options: []
+  - type: 0
+    sentence: "\xBFQu\xE9 dices, mortal? \xBFAceptas?"
+    options: []
+  - type: 0
+    sentence: Realmente me da igual si aceptas o no, lo vas a hacer y punto, que
+      de eso va ser becario.
+    options: []
+  - type: 0
+    sentence: "De normal, de esto se encargaba Hermes, pero cuando se lo coment\xE9,
+      se enfad\xF3 conmigo y se fue a uno de mis templos."
+    options: []
+  - type: 0
+    sentence: Dice que los recados no son trabajo del Dios mensajero.
+    options: []
+  - type: 0
+    sentence: "Pero bueno, antes de mandarte a otro planeta tengo que ver si est\xE1s
+      preparado."
+    options: []
+  - type: 0
+    sentence: "Uno de mis templos a\xFAn tiene restos de la \xFAltima fiesta que
+      di. Aseg\xFArate de tirarla a la basura."
+    options: []
+  - type: 0
+    sentence: "En el otro est\xE1 Hermes. P\xEDdele de mi parte que te ense\xF1e
+      a viajar entre planetas. Creo que se alegrar\xE1 de tener unas vacaciones."
+    options: []
+  - type: 0
+    sentence: "Ven a hablar conmigo cuando termines. E intenta ir m\xE1s r\xE1pido
+      pulsando Shift o algo."
+    options: []
