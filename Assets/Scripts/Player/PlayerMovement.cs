@@ -43,15 +43,13 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-        abilityManager = FindAnyObjectByType<AbilityManager>();
-        abilityManager.Unlock(AbilityType.Run);
+        abilityManager = AbilityManager.Instance;
     }
 
     void Update()
     {
         if (!canMove) return;
 
-        EnsureAbilityManager();
         UpdateGroundStatus();
 
         if (isGrounded)
@@ -78,13 +76,7 @@ public class PlayerMovement : MonoBehaviour
         ReadMovementInput();
         HandleJump();
         ApplyGravity();
-        MovePlayer(); // Unificada con gravedad
-    }
-
-    private void EnsureAbilityManager()
-    {
-        if (abilityManager == null)
-            abilityManager = FindAnyObjectByType<AbilityManager>();
+        MovePlayer();
     }
 
     private void UpdateGroundStatus()
@@ -100,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        inputDirection = (transform.right * x + transform.forward * z);
+        inputDirection = transform.right * x + transform.forward * z;
 
         if (inputDirection.sqrMagnitude > 1f)
             inputDirection.Normalize();

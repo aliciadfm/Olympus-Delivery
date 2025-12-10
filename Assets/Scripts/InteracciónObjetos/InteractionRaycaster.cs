@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class InteractionRaycaster : MonoBehaviour
 {
     public float distancia = 3f;
@@ -15,49 +16,8 @@ public class InteractionRaycaster : MonoBehaviour
     void Start()
     {
         camara = Camera.main;
-
-        if (interacionManager == null)
-            interacionManager = FindAnyObjectByType<InteracionManager>();
-
-        if (indicatorText == null)
-        {
-            // Buscamos todos los TMP_Text (incluyendo inactivos)
-            TMP_Text[] allTexts = FindObjectsOfType<TMP_Text>(true);
-
-            if (allTexts != null && allTexts.Length > 0)
-            {
-                // 1) Primero intentamos encontrar por nombre exacto preferido (case-insensitive)
-                foreach (var t in allTexts)
-                {
-                    if (string.Equals(t.gameObject.name, preferredIndicatorName, System.StringComparison.OrdinalIgnoreCase))
-                    {
-                        indicatorText = t;
-                        break;
-                    }
-                }
-
-                // 2) Si no encontramos por nombre exacto, aplicamos heurística por palabras clave
-                if (indicatorText == null)
-                {
-                    foreach (var t in allTexts)
-                    {
-                        string nameLower = t.gameObject.name.ToLower();
-                        if (nameLower.Contains("textinteract") || nameLower.Contains("textinteracturar"))
-                        {
-                            indicatorText = t;
-                            break;
-                        }
-                    }
-                }
-
-                // 3) Fallback: si sólo hay uno o no hubo coincidencias, tomamos el primero
-                if (indicatorText == null)
-                    indicatorText = allTexts[0];
-            }
-        }
-
-        if (indicatorText != null)
-            indicatorText.gameObject.SetActive(false);
+        interacionManager = FindAnyObjectByType<InteracionManager>();
+        FindIndicatorText();
     }
 
     void Update()
@@ -121,6 +81,60 @@ public class InteractionRaycaster : MonoBehaviour
             }
         }
 
-        indicatorText.gameObject.SetActive(false);
+        if (indicatorText != null)
+            indicatorText.gameObject.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        indicatorText = null;
+        FindIndicatorText();
+    }
+
+    private void FindIndicatorText()
+    {
+        TMP_Text[] allTexts = FindObjectsOfType<TMP_Text>(true);
+
+        if (allTexts == null || allTexts.Length == 0)
+            return;
+
+        foreach (var t in allTexts)
+        {
+            if (string.Equals(t.gameObject.name, preferredIndicatorName,
+                System.StringComparison.OrdinalIgnoreCase))
+            {
+                indicatorText = t;
+                break;
+            }
+        }
+
+        if (indicatorText == null)
+        {
+            foreach (var t in allTexts)
+            {
+                string nameLower = t.gameObject.name.ToLower();
+                if (nameLower.Contains("textinteract"))
+                {
+                    indicatorText = t;
+                    break;
+                }
+            }
+        }
+
+        if (indicatorText == null)
+            indicatorText = allTexts[0];
+
+        if (indicatorText != null)
+            indicatorText.gameObject.SetActive(false);
     }
 }

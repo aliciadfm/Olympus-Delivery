@@ -8,6 +8,9 @@ TagManager:
   - interactuable
   - antorcha
   - basura
+  - Portal
+  - AnuncioUI
+  - DialogueUi
   layers:
   - Default
   - TransparentFX

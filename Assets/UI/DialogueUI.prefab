@@ -91,11 +91,11 @@ GameObject:
   - component: {fileID: 3623812988450966716}
   m_Layer: 5
   m_Name: DialogueUI
-  m_TagString: Untagged
+  m_TagString: DialogueUi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &978041667787228881
 RectTransform:
   m_ObjectHideFlags: 0

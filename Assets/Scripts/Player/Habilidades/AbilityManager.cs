@@ -5,7 +5,7 @@ public class AbilityManager : MonoBehaviour
 {
     public static AbilityManager Instance;
 
-    private HashSet<AbilityType> unlockedAbilities = new HashSet<AbilityType>();
+    private HashSet<AbilityType> unlockedAbilities = new();
 
     void Awake()
     {
@@ -17,13 +17,14 @@ public class AbilityManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        Unlock(AbilityType.Run);
     }
 
     public void Unlock(AbilityType ability)
     {
-        if (!unlockedAbilities.Contains(ability))
+        if (unlockedAbilities.Add(ability))
         {
-            unlockedAbilities.Add(ability);
             Debug.Log("Habilidad desbloqueada: " + ability);
         }
     }
@@ -36,5 +37,6 @@ public class AbilityManager : MonoBehaviour
     public void ResetAbilities()
     {
         unlockedAbilities.Clear();
+        Unlock(AbilityType.Run);
     }
 }
