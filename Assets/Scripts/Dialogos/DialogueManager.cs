@@ -31,7 +31,6 @@ public class DialogueManager : MonoBehaviour
     private DialogueNode[] nodes;
     private DialogueNode currentNode;
     private int index = 0;
-
     private bool isDialogueActive = false;
     private bool isTyping = false;
     private string currentSentence = "";
@@ -42,6 +41,7 @@ public class DialogueManager : MonoBehaviour
     private PlayerMovement playerMovement;
     private CameraMovement cameraMovement;
     private GameObject engagedNPC;
+    private HeadLookAtPlayer headLook;
 
     public float typingSpeed = 0.05f;
 
@@ -105,6 +105,10 @@ public class DialogueManager : MonoBehaviour
 
         if (engagedNPC != null)
         {
+            headLook = engagedNPC.GetComponentInChildren<HeadLookAtPlayer>();
+            if (headLook != null)
+                headLook.StartLooking();
+ 
             var trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
             if (trigger != null)
                 trigger.SetInteractionEnabled(false);
@@ -221,6 +225,12 @@ public class DialogueManager : MonoBehaviour
         {
             var trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
             if (trigger) trigger.SetInteractionEnabled(true);
+
+            if (headLook != null)
+            {
+                headLook.StopLookingWithDelay();
+                headLook = null;
+            }
 
             engagedNPC = null;
         }

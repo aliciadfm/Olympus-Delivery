@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PlanetaZeus.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/PlanetaHefesto.unity
+    guid: bca7819b1c093a944b7eaf065f4bd0de
+  - enabled: 0
     path: Assets/Scenes/CampoDePruebas.unity
     guid: 165f696f67d816f45b0c03f5501f1d3f
   m_configObjects:

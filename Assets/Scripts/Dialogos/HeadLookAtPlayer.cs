@@ -8,10 +8,9 @@ public class HeadLookAtPlayer : MonoBehaviour
     private Transform player;
     public float turnSpeed = 5f;
     public float maxAngle = 60f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float stopLookingAfterSeconds = 30f;
+    public float stopLookingDelay = 2f;
     private Coroutine stopLookCoroutine;
-    private bool isTalking = false;
+    private bool isLooking = false;
 
     void Start()
     {   
@@ -22,25 +21,17 @@ public class HeadLookAtPlayer : MonoBehaviour
 
     void LateUpdate()
     {
-        if(player.IsUnityNull())
-        {
-            GameObject playerObj = GameObject.FindWithTag("Player");
-            if (playerObj != null) 
-            {
-                player = playerObj.transform;
-            }
-        }
-        if (!isTalking) return;
+        if (!isLooking || player == null) return;
 
-        // Dirección hacia el jugador
         Vector3 dir = player.position - headBone.position;
         Quaternion targetRot = Quaternion.LookRotation(dir);
-
-        // LIMITAR ángulos para que no gire el cuello demasiado
         Quaternion limitedRot = LimitRotation(headBone.rotation, targetRot, maxAngle);
 
-        // Interpolación suave
-        headBone.rotation = Quaternion.Slerp(headBone.rotation, limitedRot, Time.deltaTime * turnSpeed);
+        headBone.rotation = Quaternion.Slerp(
+            headBone.rotation,
+            limitedRot,
+            Time.deltaTime * turnSpeed
+        );
     }
 
     Quaternion LimitRotation(Quaternion current, Quaternion target, float maxAngle)
@@ -55,34 +46,30 @@ public class HeadLookAtPlayer : MonoBehaviour
         return target;
     }
 
-
-public void StartDialogue()
-{
-    isTalking = true;
-
-    if (stopLookCoroutine != null)
+    public void StartLooking()
     {
-        StopCoroutine(stopLookCoroutine);
+        isLooking = true;
+
+        if (stopLookCoroutine != null)
+        {
+            StopCoroutine(stopLookCoroutine);
+            stopLookCoroutine = null;
+        }
+    }
+
+    public void StopLookingWithDelay()
+    {
+        if (stopLookCoroutine != null)
+            StopCoroutine(stopLookCoroutine);
+
+        stopLookCoroutine = StartCoroutine(StopLookingAfterDelay());
+    }
+
+    private IEnumerator StopLookingAfterDelay()
+    {
+        yield return new WaitForSeconds(stopLookingDelay);
+        isLooking = false;
         stopLookCoroutine = null;
     }
-}
-
-public void EndDialogue()
-{
-    if (stopLookCoroutine != null)
-        StopCoroutine(stopLookCoroutine);
-
-    stopLookCoroutine = StartCoroutine(StopLookingAfterDelay());
-}
-
-private IEnumerator StopLookingAfterDelay()
-{
-    yield return new WaitForSeconds(stopLookingAfterSeconds);
-    isTalking = false;
-    stopLookCoroutine = null;
-}
-
-
-
 }
 

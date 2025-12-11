@@ -25855,7 +25855,7 @@ MonoBehaviour:
   headBone: {fileID: 135761623}
   turnSpeed: 5
   maxAngle: 60
-  stopLookingAfterSeconds: 30
+  stopLookingDelay: 2
 --- !u!135 &923529350
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -30207,7 +30207,7 @@ MonoBehaviour:
   headBone: {fileID: 537729927}
   turnSpeed: 5
   maxAngle: 60
-  stopLookingAfterSeconds: 30
+  stopLookingDelay: 2
 --- !u!1001 &1086110353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41489,7 +41489,7 @@ MonoBehaviour:
   headBone: {fileID: 1362500046}
   turnSpeed: 5
   maxAngle: 60
-  stopLookingAfterSeconds: 30
+  stopLookingDelay: 2
 --- !u!95 &1493765027
 Animator:
   serializedVersion: 7
@@ -53595,7 +53595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1963269420
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53676,7 +53676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8eab63476483ba4bbb8681263188532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: CampoDePruebas
+  sceneToLoad: PlanetaHefesto
 --- !u!136 &1963269424
 CapsuleCollider:
   m_ObjectHideFlags: 0
