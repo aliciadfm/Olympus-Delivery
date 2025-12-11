@@ -13,5 +13,7 @@ public class UnlockDoubleJumpZone : MonoBehaviour
         {
             AnuncioManager.Instance.MostrarAnuncio("¡Habilidad Desbloqueada: Doble Salto!");
         }
+
+        gameObject.SetActive(false);
     }
 }

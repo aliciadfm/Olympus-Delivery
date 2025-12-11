@@ -23,7 +23,7 @@ public class InteracionManager : MonoBehaviour
         }
         else if (indiceBasura < numBasuraTotal)
         {
-            anuncioManager.MostrarAnuncio(" Basura recogida: " + indiceBasura + "  de " + numBasuraTotal);
+            anuncioManager.MostrarAnuncio(" Basura recogida: " + indiceBasura + " de " + numBasuraTotal);
         }
     }
 
@@ -32,7 +32,7 @@ public class InteracionManager : MonoBehaviour
         indiceAntorcas++;
         if (indiceAntorcas < numAntorchasTotal)
         {
-            anuncioManager.MostrarAnuncio("Antorchas enencdidads: " + indiceAntorcas + " de " + numAntorchasTotal);
+            anuncioManager.MostrarAnuncio("Antorchas encendidas: " + indiceAntorcas + " de " + numAntorchasTotal);
         } else if (indiceAntorcas == numAntorchasTotal)
         {
             portal.SetActive(true);

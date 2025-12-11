@@ -19,8 +19,6 @@ public class AbilityManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Unlock(AbilityType.Run);
-        Unlock(AbilityType.DoubleJump);
-        Unlock(AbilityType.Dash);
     }
 
     public void Unlock(AbilityType ability)
@@ -40,7 +38,5 @@ public class AbilityManager : MonoBehaviour
     {
         unlockedAbilities.Clear();
         Unlock(AbilityType.Run);
-        Unlock(AbilityType.DoubleJump);
-        Unlock(AbilityType.Dash);
     }
 }
