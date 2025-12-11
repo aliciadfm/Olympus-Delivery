@@ -1,5 +1,9 @@
 using UnityEngine;
 
+using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,32 +22,29 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 1f;
 
-    // === DIOS MODE ===
     [Header("Modo Dios")]
     public float godModeSpeed = 10f;
     public KeyCode godModeToggleKey = KeyCode.C;
-
     private bool godMode = false;
-
     private bool isDashing = false;
     private float dashTimer = 0f;
     private float dashCooldownTimer = 0f;
-
     private CharacterController controller;
     private AbilityManager abilityManager;
-
     private Vector3 velocity;
     private Vector3 inputDirection;
-
     private bool isGrounded;
     private bool canDoubleJump = false;
-
     private float coyote = 0.2f;
     private float coyoteCounter;
-
     private float jumpBuffer = 0.2f;
     private float jumpBufferCounter;
 
+    [Header("Has Muerto UI")]
+    public GameObject hasMuertoUI;
+    public float deathFadeDuration = 3f;
+    private bool isDying = false;
+    private Image hasMuertoPanelImage;
     public bool canMove = true;
     public RunScreenEffect runScreenEffect;
 
@@ -51,6 +52,19 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         abilityManager = AbilityManager.Instance;
+
+        hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
+        if (hasMuertoUI != null)
+        {
+            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+            hasMuertoUI.SetActive(false);
+            if (hasMuertoPanelImage != null)
+            {
+                Color c = hasMuertoPanelImage.color;
+                c.a = 0f;
+                hasMuertoPanelImage.color = c;
+            }
+        }
     }
 
     void Update()
@@ -233,9 +247,76 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.CompareTag("Lava"))
+        if (hit.collider.CompareTag("Lava") && !isDying)
         {
-            Destroy(gameObject);
+            isDying = true;
+            StartCoroutine(DeathSequence());
         }
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        canMove = false;
+
+        if (hasMuertoUI != null && hasMuertoPanelImage != null)
+        {
+            hasMuertoUI.SetActive(true);
+
+            Color c = hasMuertoPanelImage.color;
+            c.a = 0f;
+            hasMuertoPanelImage.color = c;
+
+            float elapsed = 0f;
+            while (elapsed < deathFadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                c.a = Mathf.Lerp(0f, 1f, elapsed / deathFadeDuration);
+                hasMuertoPanelImage.color = c;
+                yield return null;
+            }
+
+            c.a = 1f;
+            hasMuertoPanelImage.color = c;
+        }
+        yield return new WaitForSeconds(0.25f);
+
+        Destroy(gameObject);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        EnsureHasMuertoHidden();
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        EnsureHasMuertoHidden();
+    }
+
+    private void EnsureHasMuertoHidden()
+    {
+        if (hasMuertoUI == null)
+            hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
+
+        if (hasMuertoUI == null) return;
+
+        if (hasMuertoPanelImage == null)
+            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+
+        if (hasMuertoPanelImage != null)
+        {
+            Color c = hasMuertoPanelImage.color;
+            c.a = 0f;
+            hasMuertoPanelImage.color = c;
+        }
+
+        hasMuertoUI.SetActive(false);
     }
 }

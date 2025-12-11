@@ -12,6 +12,7 @@ TagManager:
   - AnuncioUI
   - DialogueUi
   - Lava
+  - HasMuertoUI
   layers:
   - Default
   - TransparentFX
