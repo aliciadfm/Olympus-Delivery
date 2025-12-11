@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
+  m_Name: Hefesto 3
+  m_EditorClassIdentifier: 
+  npcName: Hefesto
+  nodes:
+  - type: 0
+    sentence: "\xA1Lo has encontrado! Muchas gracias."
+    options: []
+  - type: 0
+    sentence: "Espera, t\xFA no eres Hermes. Debes ser el nuevo becario del que he
+      o\xEDdo hablar."
+    options: []
+  - type: 0
+    sentence: "Ya que estamos, \xBFme ayudar\xEDas con mi perfil de Thunder?"
+    options: []
+  - type: 0
+    sentence: "Tu que me conoces menos ser\xE1s m\xE1s imparcial. Con tu ayuda puedo
+      hacer un perfil m\xE1s atractivo."
+    options: []
+  - type: 1
+    sentence: "\xBFQu\xE9 deber\xEDa poner sobre d\xF3nde vivo?"
+    options:
+    - optionText: Una cueva gigante con lava.
+      isCorrect: 0
+      responseIfWrong: "Creo que no eres tan \xFAtil como Hermes."
+    - optionText: "Separado de la civilizaci\xF3n."
+      isCorrect: 0
+      responseIfWrong: "Este es el que ten\xEDa antes. Ya s\xE9 que no funciona."
+    - optionText: "En un entorno natural, c\xE1lido y acogedor."
+      isCorrect: 1
+      responseIfWrong: "Este texto no se ver\xE1."
+    - optionText: Entre espadas y yunques.
+      isCorrect: 0
+      responseIfWrong: "Creo que ser\xE1 mejor bajarle a las met\xE1foras."
+  - type: 0
+    sentence: "Suena bien, si que es una zona c\xE1lida."
+    options: []
+  - type: 1
+    sentence: "\xBFQu\xE9 aficiones pongo?"
+    options:
+    - optionText: Forja, charlas tranquilas y hacer figuras.
+      isCorrect: 1
+      responseIfWrong: No se debe ver.
+    - optionText: Pasear rodeado de naturaleza.
+      isCorrect: 0
+      responseIfWrong: Soy cojo, zopenco.
+    - optionText: El amor y la guerra.
+      isCorrect: 0
+      responseIfWrong: "Esa frase me trae malos recuerdos. No la digas nunca m\xE1s
+        por favor."
+    - optionText: Fabricar armamento.
+      isCorrect: 0
+      responseIfWrong: Creo que eso no suena tan bien fuera del olimpo.
+  - type: 0
+    sentence: Me encanta. Hace tiempo que no forjo algo distinto a un arma, tengo
+      que practicar para recuperar mi habilidad.
+    options: []
+  - type: 1
+    sentence: "\xBFAlguna caracter\xEDstica destacable?"
+    options:
+    - optionText: Mommy Issues.
+      isCorrect: 0
+      responseIfWrong: No me parece algo positivo.
+    - optionText: Soledad.
+      isCorrect: 0
+      responseIfWrong: Es lo contrario a lo que busco, gracias pero no.
+    - optionText: "Crear volcanes y aut\xF3matas."
+      isCorrect: 0
+      responseIfWrong: "Si bien es verdad, creo que eso va a asustar a la gente.
+        Prefiero hablar de mis aut\xF3matas en la segunda o tercera cita."
+    - optionText: Creatividad.
+      isCorrect: 1
+      responseIfWrong: Esto no sale.
+  - type: 0
+    sentence: "\xA1Perfecto! \xBFSab\xEDas que yo cre\xE9 los palacios del Olimpo?
+      J\xE1, tambi\xE9 soy el Dios de la artesan\xEDa, aunque es un t\xEDtulo menos
+      imponente que de la forja."
+    options: []
+  - type: 1
+    sentence: "\xBFC\xF3mo deber\xEDa vestirme para la foto?"
+    options:
+    - optionText: "En ba\xF1ador."
+      isCorrect: 0
+      responseIfWrong: "No tengo esas cosas. No es que pueda nadar mucho aqu\xED."
+    - optionText: Pantalones skinny.
+      isCorrect: 0
+      responseIfWrong: "No me siento c\xF3modo llevando eso en lo absoluto."
+    - optionText: "Color ceniza que pega con tu est\xE9tica con toques color fuego."
+      isCorrect: 1
+      responseIfWrong: "Si bien es verdad, creo que eso va a asustar a la gente.
+        Prefiero hablar de mis aut\xF3matas en la segunda o tercera cita."
+    - optionText: Desnudo.
+      isCorrect: 0
+      responseIfWrong: NO.
+  - type: 0
+    sentence: "\xA1Perfecto! \xBFSab\xEDas que yo cre\xE9 los palacios del Olimpo?
+      J\xE1, tambi\xE9 soy el Dios de la artesan\xEDa, aunque es un t\xEDtulo menos
+      imponente que de la forja."
+    options: []
+  - type: 0
+    sentence: "\xBFC\xF3mo? Ya me han llegado notificaciones de que quieren quedar
+      conmigo."
+    options: []
+  - type: 0
+    sentence: "Ayudame a elegir por favor, no soy bueno con estas cosas. Te dejo
+      em m\xF3vil en la mesa para que me ayudes. Nada de locas, por favor."
+    options: []

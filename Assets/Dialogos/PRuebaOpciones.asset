@@ -29,3 +29,18 @@ MonoBehaviour:
     - optionText: mala2
       isCorrect: 0
       responseIfWrong: "esto tambi\xE9n deber\xEDas verlo"
+  - type: 0
+    sentence: 2
+    options:
+    - optionText: buena1
+      isCorrect: 1
+      responseIfWrong: "esto no deber\xEDas verlo"
+    - optionText: mala1
+      isCorrect: 0
+      responseIfWrong: "esto si deber\xEDas verlo"
+    - optionText: buena2
+      isCorrect: 1
+      responseIfWrong: "esto tampoco deber\xEDas verlo"
+    - optionText: mala2
+      isCorrect: 0
+      responseIfWrong: "esto tambi\xE9n deber\xEDas verlo"

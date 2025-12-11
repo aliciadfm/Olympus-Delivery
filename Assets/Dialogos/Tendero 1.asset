@@ -10,10 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
-  m_Name: FinZeus2
+  m_Name: Tendero 1
   m_EditorClassIdentifier: 
-  npcName: Zeus
+  npcName: Tendero
   nodes:
   - type: 0
-    sentence: "\xBFA qu\xE9 esperas parguela?\n\xA1Uno, dos, uno, dos!"
+    sentence: Buff, como me duele la cabeza.
+    options: []
+  - type: 0
+    sentence: "\xBFQu\xE9 pas\xF3 ayer? Y lo pero de todo. \xBFY mi carro para llevar
+      la mercanc\xEDa?"
     options: []

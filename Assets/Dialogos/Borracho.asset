@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
-  m_Name: FinZeus2
+  m_Name: Borracho
   m_EditorClassIdentifier: 
-  npcName: Zeus
+  npcName: Borracho
   nodes:
   - type: 0
-    sentence: "\xBFA qu\xE9 esperas parguela?\n\xA1Uno, dos, uno, dos!"
+    sentence: GURAGUARG MARAKATA MERTENINGUE.
     options: []

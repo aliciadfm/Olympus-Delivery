@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
+  m_Name: Hefesto 1
+  m_EditorClassIdentifier: 
+  npcName: Hefesto
+  nodes:
+  - type: 0
+    sentence: Esnif, esnif...
+    options: []
+  - type: 0
+    sentence: "Hermes, \xBFeres t\xFA? No me pillas en un buen momento."
+    options: []
+  - type: 0
+    sentence: "He intentado pasar p\xE1gina desde que Afrodita me dej\xF3... pero
+      no soy capaz. No aguanto m\xE1s estar solo."
+    options: []
+  - type: 0
+    sentence: "Por mucho que he intentado usar Thunder para ligar no he tenido \xE9xito."
+    options: []
+  - type: 0
+    sentence: "Anoche, del enfado, lanc\xE9 mi martillo con todas mis fuerzas y ahora
+      no puedo ni forjar para distraerme."
+    options: []
+  - type: 0
+    sentence: "\xBFPuedes ir a por \xE9l?"
+    options: []
+  - type: 0
+    sentence: "Creo que necesitar\xE1s las nuevas botas que me encargaste. Pero las
+      lanc\xE9 tambi\xE9n."
+    options: []
+  - type: 0
+    sentence: Lamento darte estos problemas.
+    options: []

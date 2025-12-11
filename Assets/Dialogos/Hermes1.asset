@@ -18,9 +18,6 @@ MonoBehaviour:
     sentence: "\xBFC\xF3mo has llegado hasta aqu\xED arriba?"
     options: []
   - type: 0
-    sentence: "\xBFC\xF3mo has llegado hasta aqu\xED arriba?"
-    options: []
-  - type: 0
     sentence: "\xBFDe verdad eres t\xFA el nuevo becario? No me puedo creer que Zeus
       lo haya hecho."
     options: []
