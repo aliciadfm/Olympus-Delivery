@@ -5,8 +5,9 @@ public class MenuPause : MonoBehaviour
 {
     public GameObject pauseCanvas;
     public string mainMenuScene = "MenuPrincipal";
-
     public MonoBehaviour[] scriptsToDisable;
+
+    [SerializeField] private UIMiraManager miraManager;
 
     bool isPaused = false;
 
@@ -19,7 +20,7 @@ public class MenuPause : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))  
+        if (Input.GetKeyDown(KeyCode.Escape))  
         {
             if (isPaused) ResumeGame();
             else PauseGame();
@@ -30,6 +31,8 @@ public class MenuPause : MonoBehaviour
     {
         if (pauseCanvas != null)
             pauseCanvas.SetActive(true);
+        if (miraManager != null)
+            miraManager.SetVisible(false);
 
         foreach (var s in scriptsToDisable)
             if (s != null) s.enabled = false;
@@ -50,6 +53,8 @@ public class MenuPause : MonoBehaviour
 
         if (pauseCanvas != null)
             pauseCanvas.SetActive(false);
+        if (miraManager != null)
+            miraManager.SetVisible(true);
 
         isPaused = false;
 

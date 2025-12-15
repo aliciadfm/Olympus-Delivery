@@ -45,6 +45,8 @@ public class DialogueManager : MonoBehaviour
 
     public float typingSpeed = 0.05f;
 
+    [SerializeField] private UIMiraManager miraManager;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -116,6 +118,9 @@ public class DialogueManager : MonoBehaviour
 
         isDialogueActive = true;
         dialogueUI.SetActive(true);
+
+        if (miraManager != null)
+            miraManager.SetVisible(false);
 
         npcNameText.text = dialogue.npcName;
         nodes = dialogue.nodes;
@@ -220,6 +225,9 @@ public class DialogueManager : MonoBehaviour
 
         isDialogueActive = false;
         dialogueUI.SetActive(false);
+
+        if (miraManager != null)
+            miraManager.SetVisible(false);
 
         if (engagedNPC != null)
         {
