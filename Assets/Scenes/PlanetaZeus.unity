@@ -4855,7 +4855,7 @@ Transform:
   m_GameObject: {fileID: 159974677}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -879.7433, y: -0, z: -149.2646}
+  m_LocalPosition: {x: -879.7433, y: 0.1, z: -149.2646}
   m_LocalScale: {x: 170.45845, y: 1, z: 205.99193}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23564,7 +23564,7 @@ Transform:
   m_GameObject: {fileID: 878859008}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 365.7755, y: -0, z: -644.5551}
+  m_LocalPosition: {x: 365.7755, y: 0.1, z: -644.5551}
   m_LocalScale: {x: 104.846535, y: 1, z: 79.43049}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37425,6 +37425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f49b3bf35ee401469204974b5a8923f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crosshairTag: CrosshairUi
   crosshairRoot: {fileID: 2045069068}
 --- !u!4 &1355177650
 Transform:
@@ -46783,7 +46784,7 @@ Transform:
   m_GameObject: {fileID: 1692953130}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 447, y: 0, z: 473.0545}
+  m_LocalPosition: {x: 447, y: 0.1, z: 473.0545}
   m_LocalScale: {x: 104.846535, y: 1, z: 91.72577}
   m_ConstrainProportionsScale: 0
   m_Children: []
