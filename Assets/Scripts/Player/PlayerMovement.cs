@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float groundedGravity = -2f;
 
     [Header("Dash")]
-    public float dashForce = 20f;
-    public float dashDuration = 0.15f;
+    public float dashForce = 100f;
+    public float dashDuration = 100f;
     public float dashCooldown = 1f;
 
     [Header("Modo Dios")]
