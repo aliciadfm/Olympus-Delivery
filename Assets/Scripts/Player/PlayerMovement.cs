@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Modo Dios")]
     public float godModeSpeed = 10f;
-    public KeyCode godModeToggleKey = KeyCode.C;
+    public KeyCode godModeToggleKey = KeyCode.M;
     private bool godMode = false;
     private bool isDashing = false;
     private float dashTimer = 0f;
@@ -41,10 +41,11 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
 
     [Header("Has Muerto UI")]
-    public GameObject hasMuertoUI;
+    [SerializeField] private GameObject hasMuertoUI;
     public float deathFadeDuration = 3f;
     private bool isDying = false;
     private Image hasMuertoPanelImage;
+    private Transform respawnPoint;
     public bool canMove = true;
     public RunScreenEffect runScreenEffect;
 
@@ -53,10 +54,14 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         abilityManager = AbilityManager.Instance;
 
-        hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
+        // Inicializar referencias de UI y respawn
+        hasMuertoUI ??= GameObject.FindWithTag("HasMuertoUI");
+        respawnPoint ??= GameObject.FindWithTag("Respawn")?.transform;
+
+        // Desactivar UI al inicio de la escena
         if (hasMuertoUI != null)
         {
-            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+            hasMuertoPanelImage = hasMuertoPanelImage ?? hasMuertoUI.GetComponentInChildren<Image>(true);
             hasMuertoUI.SetActive(false);
             if (hasMuertoPanelImage != null)
             {
@@ -65,10 +70,34 @@ public class PlayerMovement : MonoBehaviour
                 hasMuertoPanelImage.color = c;
             }
         }
+
+        // Resetear variables
+        canMove = true;
+        isDying = false;
+        velocity = Vector3.zero;
+        inputDirection = Vector3.zero;
+    }
+
+    void Start()
+    {
+        if (hasMuertoUI != null)
+            hasMuertoUI.SetActive(false);
     }
 
     void Update()
     {
+
+        // Asegurarse de que la UI exista antes de usarla
+        if (hasMuertoUI == null)
+        {
+            hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
+            if (hasMuertoUI != null)
+            {
+                hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+                hasMuertoUI.SetActive(false);
+            }
+        }
+
         if (Input.GetKeyDown(godModeToggleKey))
             ToggleGodMode();
 
@@ -257,11 +286,15 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DeathSequence()
     {
         canMove = false;
+        isDying = true;
 
+        // Obtener referencias actualizadas de la escena
+        GetSceneReferences();
+
+        // Mostrar UI de muerte
         if (hasMuertoUI != null && hasMuertoPanelImage != null)
         {
             hasMuertoUI.SetActive(true);
-
             Color c = hasMuertoPanelImage.color;
             c.a = 0f;
             hasMuertoPanelImage.color = c;
@@ -278,12 +311,49 @@ public class PlayerMovement : MonoBehaviour
             c.a = 1f;
             hasMuertoPanelImage.color = c;
         }
-        yield return new WaitForSeconds(0.25f);
 
-        Destroy(gameObject);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // Espera antes del respawn
+        yield return new WaitForSeconds(8f);
+
+        GetSceneReferences();
+
+        // Teletransportar jugador
+        if (respawnPoint != null)
+        {
+            controller.enabled = false;
+            transform.position = respawnPoint.position;
+            controller.enabled = true;
+        }
+
+        // Reset de estados
+        canMove = true;
+        isDying = false;
+        velocity = Vector3.zero;
+        inputDirection = Vector3.zero;
+
+        // Ocultar UI de muerte
+        if (hasMuertoUI != null)
+            hasMuertoUI.SetActive(false);
     }
+
+    private void GetSceneReferences()
+    {
+        if (hasMuertoUI == null)
+        {
+            hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
+            if (hasMuertoUI != null)
+                hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+                hasMuertoUI.SetActive(false);
+        } else if (hasMuertoPanelImage == null)
+        {
+            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+            hasMuertoUI.SetActive(false);
+        }
+
+        if (respawnPoint == null)
+            respawnPoint = GameObject.FindWithTag("Respawn")?.transform;
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -295,9 +365,29 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene s, LoadSceneMode m)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        EnsureHasMuertoHidden();
+        // Buscar la UI y respawn
+        hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
+        if (hasMuertoUI != null)
+        {
+            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
+            hasMuertoUI.SetActive(false); // Ocultarla inmediatamente
+            if (hasMuertoPanelImage != null)
+            {
+                Color c = hasMuertoPanelImage.color;
+                c.a = 0f;
+                hasMuertoPanelImage.color = c;
+            }
+        }
+
+        respawnPoint = GameObject.FindWithTag("Respawn")?.transform;
+
+        // Resetear estado del jugador
+        canMove = true;
+        isDying = false;
+        velocity = Vector3.zero;
+        inputDirection = Vector3.zero;
     }
 
     private void EnsureHasMuertoHidden()
@@ -310,13 +400,13 @@ public class PlayerMovement : MonoBehaviour
         if (hasMuertoPanelImage == null)
             hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
 
+        hasMuertoUI.SetActive(false);
+
         if (hasMuertoPanelImage != null)
         {
             Color c = hasMuertoPanelImage.color;
             c.a = 0f;
             hasMuertoPanelImage.color = c;
         }
-
-        hasMuertoUI.SetActive(false);
     }
 }

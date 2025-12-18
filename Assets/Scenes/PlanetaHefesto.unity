@@ -2188,6 +2188,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4908839433523931704, guid: 30d1d5d35318c08498c18fe0baad8f47, type: 3}
   m_PrefabInstance: {fileID: 166215135}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &168261405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168261406}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &168261406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168261405}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 57, y: 4, z: -69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &181903378
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11028,7 +11059,7 @@ PrefabInstance:
     - target: {fileID: 538622988240153072, guid: 6b023414b2291d24292de95ca723ccfa, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8da1863f6808deb4e9afd7dfbc47dd63, type: 3}
+      objectReference: {fileID: 21300000, guid: 0c7576f3c7e7699408fb1231e7d28e2c, type: 3}
     - target: {fileID: 978041667787228881, guid: 6b023414b2291d24292de95ca723ccfa, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -26677,6 +26708,8 @@ SceneRoots:
   - {fileID: 1114064557}
   - {fileID: 387149900}
   - {fileID: 236226172}
+  - {fileID: 1652783168}
+  - {fileID: 168261406}
   - {fileID: 942268600}
   - {fileID: 1974173996}
   - {fileID: 1544534076}
@@ -26704,4 +26737,3 @@ SceneRoots:
   - {fileID: 22634097}
   - {fileID: 575662937}
   - {fileID: 1596926783}
-  - {fileID: 1652783168}

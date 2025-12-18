@@ -15,10 +15,9 @@ public class AbilityManager : MonoBehaviour
             return;
         }
 
+        Unlock(AbilityType.Run);
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        Unlock(AbilityType.Run);
     }
 
     public void Unlock(AbilityType ability)
@@ -32,11 +31,5 @@ public class AbilityManager : MonoBehaviour
     public bool HasAbility(AbilityType ability)
     {
         return unlockedAbilities.Contains(ability);
-    }
-
-    public void ResetAbilities()
-    {
-        unlockedAbilities.Clear();
-        Unlock(AbilityType.Run);
     }
 }
