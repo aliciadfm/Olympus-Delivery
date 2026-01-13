@@ -6,22 +6,18 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movimiento")]
     public float speed = 6f;
     public float sprintMultiplier = 1.6f;
     public float airControlMultiplier = 0.6f;
 
-    [Header("Salto y Gravedad")]
     public float jumpHeight = 1.6f;
     public float gravity = -19.62f;
     public float groundedGravity = -2f;
 
-    [Header("Dash")]
     public float dashDistance = 8f;
     public float dashDuration = 1f;
     public float dashCooldown = 1f;
 
-    [Header("Modo Dios")]
     public float godModeSpeed = 10f;
     public KeyCode godModeToggleKey = KeyCode.C;
     private bool godMode = false;
@@ -42,9 +38,8 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBuffer = 0.2f;
     private float jumpBufferCounter;
 
-    [Header("Has Muerto UI")]
     [SerializeField] private GameObject hasMuertoUI;
-    public float deathFadeDuration = 3f;
+    public float deathFadeDuration = 1f;
     private bool isDying = false;
     private Image hasMuertoPanelImage;
     private Transform respawnPoint;
@@ -99,7 +94,24 @@ public class PlayerMovement : MonoBehaviour
         respawnPoint = GameObject.FindWithTag("Respawn")?.transform;
 
         if (hasMuertoUI != null)
+        {
             hasMuertoUI.SetActive(false);
+            if (hasMuertoPanelImage != null)
+            {
+                Color c = hasMuertoPanelImage.color;
+                c.a = 0f;
+                hasMuertoPanelImage.color = c;
+            }
+        }
+
+        StartCoroutine(DisableCCForOneFrame());
+    }
+
+    private IEnumerator DisableCCForOneFrame()
+    {
+        controller.enabled = false;
+        yield return null;
+        controller.enabled = true;
     }
 
     void Update()
@@ -162,10 +174,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) y = 1f;
         if (Input.GetKey(KeyCode.LeftControl)) y = -1f;
 
-        Vector3 move =
-            transform.right * x +
-            transform.forward * z +
-            Vector3.up * y;
+        Vector3 move = transform.right * x + transform.forward * z + Vector3.up * y;
 
         if (move.sqrMagnitude > 1f)
             move.Normalize();
@@ -319,7 +328,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(0.5f);
 
         if (respawnPoint != null)
         {
@@ -334,16 +343,32 @@ public class PlayerMovement : MonoBehaviour
         inputDirection = Vector3.zero;
 
         if (hasMuertoUI != null)
+        {
             hasMuertoUI.SetActive(false);
+            if (hasMuertoPanelImage != null)
+            {
+                Color c = hasMuertoPanelImage.color;
+                c.a = 0f;
+                hasMuertoPanelImage.color = c;
+            }
+        }
     }
 
     public void ResetDeathState()
     {
-    	StopAllCoroutines();
-    	isDying = false;
-    	canMove = true;
+        StopAllCoroutines();
+        isDying = false;
+        canMove = true;
 
-    	if (hasMuertoUI != null)
-        	hasMuertoUI.SetActive(false);
-     }
+        if (hasMuertoUI != null)
+        {
+            hasMuertoUI.SetActive(false);
+            if (hasMuertoPanelImage != null)
+            {
+                Color c = hasMuertoPanelImage.color;
+                c.a = 0f;
+                hasMuertoPanelImage.color = c;
+            }
+        }
+    }
 }

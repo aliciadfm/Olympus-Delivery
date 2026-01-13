@@ -29,7 +29,7 @@ public class PlayerSpawn : MonoBehaviour
 
         player.transform.SetPositionAndRotation(transform.position, transform.rotation);
 
-        yield return null;
+        yield return new WaitForEndOfFrame();
 
         if (cc) cc.enabled = true;
 
@@ -41,3 +41,4 @@ public class PlayerSpawn : MonoBehaviour
         }
     }
 }
+
