@@ -1,5 +1,4 @@
 using UnityEngine;
-
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -18,17 +17,20 @@ public class PlayerMovement : MonoBehaviour
     public float groundedGravity = -2f;
 
     [Header("Dash")]
-    public float dashForce = 100f;
-    public float dashDuration = 100f;
+    public float dashDistance = 8f;
+    public float dashDuration = 1f;
     public float dashCooldown = 1f;
 
     [Header("Modo Dios")]
     public float godModeSpeed = 10f;
-    public KeyCode godModeToggleKey = KeyCode.M;
+    public KeyCode godModeToggleKey = KeyCode.C;
     private bool godMode = false;
+
     private bool isDashing = false;
-    private float dashTimer = 0f;
-    private float dashCooldownTimer = 0f;
+    private float dashTimer;
+    private float dashCooldownTimer;
+    private Vector3 dashVelocity;
+
     private CharacterController controller;
     private AbilityManager abilityManager;
     private Vector3 velocity;
@@ -47,21 +49,20 @@ public class PlayerMovement : MonoBehaviour
     private Image hasMuertoPanelImage;
     private Transform respawnPoint;
     public bool canMove = true;
-    public RunScreenEffect runScreenEffect;
+
+    private bool justLoadedScene = true;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         abilityManager = AbilityManager.Instance;
 
-        // Inicializar referencias de UI y respawn
         hasMuertoUI ??= GameObject.FindWithTag("HasMuertoUI");
         respawnPoint ??= GameObject.FindWithTag("Respawn")?.transform;
 
-        // Desactivar UI al inicio de la escena
         if (hasMuertoUI != null)
         {
-            hasMuertoPanelImage = hasMuertoPanelImage ?? hasMuertoUI.GetComponentInChildren<Image>(true);
+            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
             hasMuertoUI.SetActive(false);
             if (hasMuertoPanelImage != null)
             {
@@ -71,42 +72,51 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Resetear variables
         canMove = true;
         isDying = false;
         velocity = Vector3.zero;
         inputDirection = Vector3.zero;
     }
 
-    void Start()
+    void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        justLoadedScene = true;
+        isDying = false;
+        canMove = true;
+        velocity = Vector3.zero;
+        inputDirection = Vector3.zero;
+
+        respawnPoint = GameObject.FindWithTag("Respawn")?.transform;
+
         if (hasMuertoUI != null)
             hasMuertoUI.SetActive(false);
     }
 
     void Update()
     {
-
-        // Asegurarse de que la UI exista antes de usarla
-        if (hasMuertoUI == null)
-        {
-            hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
-            if (hasMuertoUI != null)
-            {
-                hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
-                hasMuertoUI.SetActive(false);
-            }
-        }
-
         if (Input.GetKeyDown(godModeToggleKey))
             ToggleGodMode();
-
-        if (!canMove)
-            return;
 
         if (godMode)
         {
             GodModeMovement();
+            justLoadedScene = false;
+            return;
+        }
+
+        if (!canMove)
+        {
+            justLoadedScene = false;
             return;
         }
 
@@ -124,12 +134,17 @@ public class PlayerMovement : MonoBehaviour
 
         HandleDash();
         if (isDashing)
+        {
+            justLoadedScene = false;
             return;
+        }
 
         ReadMovementInput();
         HandleJump();
         ApplyGravity();
         MovePlayer();
+
+        justLoadedScene = false;
     }
 
     private void ToggleGodMode()
@@ -242,18 +257,11 @@ public class PlayerMovement : MonoBehaviour
 
         dashCooldownTimer -= Time.deltaTime;
 
-        if (CanStartDash())
+        if (Input.GetKeyDown(KeyCode.R) && dashCooldownTimer <= 0f && !isDashing)
             StartDash();
 
         if (isDashing)
             ExecuteDash();
-    }
-
-    private bool CanStartDash()
-    {
-        return Input.GetKeyDown(KeyCode.R)
-            && dashCooldownTimer <= 0f
-            && !isDashing;
     }
 
     private void StartDash()
@@ -261,14 +269,18 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimer = dashDuration;
         dashCooldownTimer = dashCooldown;
+
+        Vector3 dashDirection = inputDirection != Vector3.zero
+            ? inputDirection.normalized
+            : transform.forward;
+
+        dashVelocity = dashDirection * (dashDistance / dashDuration);
     }
 
     private void ExecuteDash()
     {
         dashTimer -= Time.deltaTime;
-
-        Vector3 dashDirection = inputDirection != Vector3.zero ? inputDirection : transform.forward;
-        controller.Move(dashDirection * dashForce * Time.deltaTime);
+        controller.Move(dashVelocity * Time.deltaTime);
 
         if (dashTimer <= 0f)
             isDashing = false;
@@ -276,6 +288,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (justLoadedScene)
+            return;
+
         if (hit.collider.CompareTag("Lava") && !isDying)
         {
             isDying = true;
@@ -286,12 +301,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DeathSequence()
     {
         canMove = false;
-        isDying = true;
 
-        // Obtener referencias actualizadas de la escena
-        GetSceneReferences();
-
-        // Mostrar UI de muerte
         if (hasMuertoUI != null && hasMuertoPanelImage != null)
         {
             hasMuertoUI.SetActive(true);
@@ -307,17 +317,10 @@ public class PlayerMovement : MonoBehaviour
                 hasMuertoPanelImage.color = c;
                 yield return null;
             }
-
-            c.a = 1f;
-            hasMuertoPanelImage.color = c;
         }
 
-        // Espera antes del respawn
         yield return new WaitForSeconds(8f);
 
-        GetSceneReferences();
-
-        // Teletransportar jugador
         if (respawnPoint != null)
         {
             controller.enabled = false;
@@ -325,88 +328,22 @@ public class PlayerMovement : MonoBehaviour
             controller.enabled = true;
         }
 
-        // Reset de estados
         canMove = true;
         isDying = false;
         velocity = Vector3.zero;
         inputDirection = Vector3.zero;
 
-        // Ocultar UI de muerte
         if (hasMuertoUI != null)
             hasMuertoUI.SetActive(false);
     }
 
-    private void GetSceneReferences()
+    public void ResetDeathState()
     {
-        if (hasMuertoUI == null)
-        {
-            hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
-            if (hasMuertoUI != null)
-                hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
-                hasMuertoUI.SetActive(false);
-        } else if (hasMuertoPanelImage == null)
-        {
-            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
-            hasMuertoUI.SetActive(false);
-        }
+    	StopAllCoroutines();
+    	isDying = false;
+    	canMove = true;
 
-        if (respawnPoint == null)
-            respawnPoint = GameObject.FindWithTag("Respawn")?.transform;
-    }
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        EnsureHasMuertoHidden();
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Buscar la UI y respawn
-        hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
-        if (hasMuertoUI != null)
-        {
-            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
-            hasMuertoUI.SetActive(false); // Ocultarla inmediatamente
-            if (hasMuertoPanelImage != null)
-            {
-                Color c = hasMuertoPanelImage.color;
-                c.a = 0f;
-                hasMuertoPanelImage.color = c;
-            }
-        }
-
-        respawnPoint = GameObject.FindWithTag("Respawn")?.transform;
-
-        // Resetear estado del jugador
-        canMove = true;
-        isDying = false;
-        velocity = Vector3.zero;
-        inputDirection = Vector3.zero;
-    }
-
-    private void EnsureHasMuertoHidden()
-    {
-        if (hasMuertoUI == null)
-            hasMuertoUI = GameObject.FindWithTag("HasMuertoUI");
-
-        if (hasMuertoUI == null) return;
-
-        if (hasMuertoPanelImage == null)
-            hasMuertoPanelImage = hasMuertoUI.GetComponentInChildren<Image>(true);
-
-        hasMuertoUI.SetActive(false);
-
-        if (hasMuertoPanelImage != null)
-        {
-            Color c = hasMuertoPanelImage.color;
-            c.a = 0f;
-            hasMuertoPanelImage.color = c;
-        }
-    }
+    	if (hasMuertoUI != null)
+        	hasMuertoUI.SetActive(false);
+     }
 }

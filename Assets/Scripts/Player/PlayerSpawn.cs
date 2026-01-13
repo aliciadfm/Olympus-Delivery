@@ -1,25 +1,43 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerSpawn : MonoBehaviour
 {
-    [Header("Prefab del Jugador (solo se usa la 1ª vez)")]
     public GameObject playerPrefab;
+
     void Start()
     {
-        GameObject existing = GameObject.FindGameObjectWithTag("Player");
+        StartCoroutine(SpawnRoutine());
+    }
 
-        if (existing == null)
+    private IEnumerator SpawnRoutine()
+    {
+        yield return null;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null)
         {
-            GameObject player = Instantiate(playerPrefab, transform.position, transform.rotation);
+            player = Instantiate(playerPrefab);
             player.tag = "Player";
             DontDestroyOnLoad(player);
         }
-        else
+
+        var cc = player.GetComponent<CharacterController>();
+        if (cc) cc.enabled = false;
+
+        player.transform.SetPositionAndRotation(transform.position, transform.rotation);
+
+        yield return null;
+
+        if (cc) cc.enabled = true;
+
+        var pm = player.GetComponent<PlayerMovement>();
+        if (pm)
         {
-            var cc = existing.GetComponent<CharacterController>();
-            if (cc) cc.enabled = false;
-            existing.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            if (cc) cc.enabled = true;
+            pm.canMove = true;
+            pm.ResetDeathState();
         }
     }
 }
