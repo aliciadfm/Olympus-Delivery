@@ -11633,6 +11633,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5b0c96348d7331c4f864acaafd003ba7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 729976468}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5b0c96348d7331c4f864acaafd003ba7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 729976469}
   m_SourcePrefab: {fileID: 100100000, guid: 5b0c96348d7331c4f864acaafd003ba7, type: 3}
 --- !u!1 &729976467 stripped
 GameObject:
@@ -11661,6 +11664,26 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1609561849471291619, guid: 5b0c96348d7331c4f864acaafd003ba7, type: 3}
+--- !u!114 &729976469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729976467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3dfac818cb09034887083be0d2c4ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueUI: {fileID: 6317260498116618837, guid: 1c5f1a3a7e203994f8ec2d46f6479e2c, type: 3}
+  npcNameText: {fileID: 426106955690585334, guid: cb95b378347600b468f2e9b4e7a118d4, type: 3}
+  dialogueText: {fileID: 9185419416052287389, guid: 650275be8dcefb34eaf0f6c151f06625, type: 3}
+  pressSpaceTip: {fileID: 0}
+  optionsPanel: {fileID: 353935794}
+  optionTexts: []
+  typingSpeed: 0.01
+  miraManager: {fileID: 1114064558}
 --- !u!1001 &730166281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14240,9 +14263,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 836499812}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 836499814}
   m_SourcePrefab: {fileID: 100100000, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
 --- !u!1 &836499810 stripped
 GameObject:
@@ -14290,26 +14310,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: 0.2, z: 0}
---- !u!114 &836499814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 836499810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3dfac818cb09034887083be0d2c4ed9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueUI: {fileID: 6317260498116618837, guid: 1c5f1a3a7e203994f8ec2d46f6479e2c, type: 3}
-  npcNameText: {fileID: 426106955690585334, guid: cb95b378347600b468f2e9b4e7a118d4, type: 3}
-  dialogueText: {fileID: 9185419416052287389, guid: 650275be8dcefb34eaf0f6c151f06625, type: 3}
-  pressSpaceTip: {fileID: 0}
-  optionsPanel: {fileID: 0}
-  optionTexts: []
-  typingSpeed: 0.05
-  miraManager: {fileID: 0}
 --- !u!1001 &846778907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20933,35 +20933,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1289866312}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1289866311}
   m_SourcePrefab: {fileID: 100100000, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
 --- !u!1 &1289866310 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2aee5aa66c5744aa5fed68ac5dea8c, type: 3}
   m_PrefabInstance: {fileID: 1289866309}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1289866311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1289866310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3dfac818cb09034887083be0d2c4ed9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueUI: {fileID: 6317260498116618837, guid: 1c5f1a3a7e203994f8ec2d46f6479e2c, type: 3}
-  npcNameText: {fileID: 426106955690585334, guid: cb95b378347600b468f2e9b4e7a118d4, type: 3}
-  dialogueText: {fileID: 9185419416052287389, guid: 650275be8dcefb34eaf0f6c151f06625, type: 3}
-  pressSpaceTip: {fileID: 0}
-  optionsPanel: {fileID: 0}
-  optionTexts: []
-  typingSpeed: 0.05
-  miraManager: {fileID: 0}
 --- !u!135 &1289866312
 SphereCollider:
   m_ObjectHideFlags: 0
