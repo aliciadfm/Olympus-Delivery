@@ -14990,7 +14990,7 @@ MonoBehaviour:
   anuncioUI: {fileID: 1316196680}
   anuncioText: {fileID: 1615680516}
   fadeDuration: 0.5
-  tiempoVisible: 3
+  tiempoVisible: 6
 --- !u!4 &901329147
 Transform:
   m_ObjectHideFlags: 0

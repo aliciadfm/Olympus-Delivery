@@ -12,6 +12,8 @@ public class InteracionManager : MonoBehaviour
     public GameObject portal;
     public GameObject zeus1;
     public GameObject zeus2;
+    public GameObject piedraprogress;
+
 
     public void AumentarIndex()
     {
@@ -46,5 +48,6 @@ public class InteracionManager : MonoBehaviour
         anuncioManager.MostrarAnuncio("Has completado la misión de Zeus, puedes volver a hablar con él.");
         zeus1.SetActive(false);
         zeus2.SetActive(true);
+	piedraprogress.SetActive(false);
     }
 }
