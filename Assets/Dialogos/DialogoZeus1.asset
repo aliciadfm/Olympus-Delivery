@@ -59,10 +59,6 @@ MonoBehaviour:
       di. Aseg\xFArate de tirarla a la basura."
     options: []
   - type: 0
-    sentence: "En el otro est\xE1 Hermes. P\xEDdele de mi parte que te ense\xF1e
-      a viajar entre planetas. Creo que se alegrar\xE1 de tener unas vacaciones."
-    options: []
-  - type: 0
     sentence: "Ven a hablar conmigo cuando termines. E intenta ir m\xE1s r\xE1pido
       pulsando Shift o algo."
     options: []

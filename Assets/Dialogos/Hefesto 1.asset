@@ -18,7 +18,7 @@ MonoBehaviour:
     sentence: Esnif, esnif...
     options: []
   - type: 0
-    sentence: "Hermes, \xBFeres t\xFA? No me pillas en un buen momento."
+    sentence: "Hermes, \xBFeres t\xFA? No me pillas en buen momento."
     options: []
   - type: 0
     sentence: "He intentado pasar p\xE1gina desde que Afrodita me dej\xF3... pero

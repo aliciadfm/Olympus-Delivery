@@ -33,5 +33,11 @@ MonoBehaviour:
     sentence: Me ha sorprendido que sea tan poco.
     options: []
   - type: 0
-    sentence: "M\xE1rchate al siguiente planeta cuando est\xE9s listo."
+    sentence: 'Ve a hablar con Hermes cerca de mi otro templo para que te
+
+      diga
+      como ir al siguiente planeta.'
+    options: []
+  - type: 0
+    sentence: He quitado la piedra del puente para que puedas pasar.
     options: []
