@@ -5327,8 +5327,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 10
+  m_Center: {x: 0, y: 6, z: -0.00000005698762}
 --- !u!114 &295732410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14403,7 +14403,7 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
-  pressEIndicator: {fileID: 1913335368}
+  pressEIndicator: {fileID: 1859883597}
 --- !u!135 &836499812
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17348,6 +17348,7 @@ MonoBehaviour:
   portal: {fileID: 1085725958}
   zeus1: {fileID: 0}
   zeus2: {fileID: 0}
+  piedraprogress: {fileID: 0}
 --- !u!4 &1086148612
 Transform:
   m_ObjectHideFlags: 0
