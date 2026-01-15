@@ -13,6 +13,7 @@ TagManager:
   - DialogueUi
   - Lava
   - HasMuertoUI
+  - DialogueUI
   layers:
   - Default
   - TransparentFX

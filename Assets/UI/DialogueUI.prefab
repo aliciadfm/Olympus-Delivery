@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 3623812988450966716}
   m_Layer: 5
   m_Name: DialogueUI
-  m_TagString: DialogueUi
+  m_TagString: HasMuertoUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

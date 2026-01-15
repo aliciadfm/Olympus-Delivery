@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
@@ -78,19 +79,38 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void RebindUI()
+{
+    // Buscamos el objeto por nombre exacto
+    GameObject canvasUI = GameObject.Find("DialogueUI");
+    
+    if (canvasUI == null) 
     {
-        dialogueUI = GameObject.FindWithTag("DialogueUi");
-        if (dialogueUI == null) return;
-
-        npcNameText = dialogueUI.transform.Find("NPCNameDialog").GetComponent<TMP_Text>();
-        dialogueText = dialogueUI.transform.Find("DialogueText").GetComponent<TMP_Text>();
-        pressSpaceTip = dialogueUI.transform.Find("PulsaEspacio").GetComponent<TMP_Text>();
-        optionsPanel = dialogueUI.transform.Find("OptionsPanel").gameObject;
-        optionTexts = optionsPanel.GetComponentsInChildren<TMP_Text>(true);
-
-        dialogueUI.SetActive(false);
-        optionsPanel.SetActive(false);
+        Debug.LogError("¡ERROR! No se encontró ningún objeto llamado 'DialogueUI' en el Mundo 2.");
+        return;
     }
+
+    dialogueUI = canvasUI;
+    TMP_Text[] allTexts = canvasUI.GetComponentsInChildren<TMP_Text>(true);
+    
+    npcNameText = Array.Find(allTexts, t => t.gameObject.name == "NPCNameDialog");
+    dialogueText = Array.Find(allTexts, t => t.gameObject.name == "DialogueText");
+    pressSpaceTip = Array.Find(allTexts, t => t.gameObject.name == "PulsaEspacio");
+
+    if (npcNameText == null) Debug.LogError("¡ERROR! No encontré 'NPCNameDialog' dentro de DialogueUI.");
+    if (dialogueText == null) Debug.LogError("¡ERROR! No encontré 'DialogueText' dentro de DialogueUI.");
+
+    Transform[] allTransforms = canvasUI.GetComponentsInChildren<Transform>(true);
+    Transform optTransform = Array.Find(allTransforms, t => t.gameObject.name == "OptionsPanel");
+    
+    if (optTransform != null)
+    {
+        optionsPanel = optTransform.gameObject;
+        optionTexts = optionsPanel.GetComponentsInChildren<TMP_Text>(true);
+    }
+
+    dialogueUI.SetActive(false);
+    Debug.Log("RebindUI completado con éxito en el Mundo 2.");
+}
 
     public void StartDialogue(DialogueData dialogue, GameObject engagedNPC = null)
     {
@@ -110,7 +130,7 @@ public class DialogueManager : MonoBehaviour
             headLook = engagedNPC.GetComponentInChildren<HeadLookAtPlayer>();
             if (headLook != null)
                 headLook.StartLooking();
- 
+
             var trigger = engagedNPC.GetComponentInChildren<DialogueTrigger>();
             if (trigger != null)
                 trigger.SetInteractionEnabled(false);
@@ -139,9 +159,9 @@ public class DialogueManager : MonoBehaviour
 
         currentNode = nodes[index];
 
-        optionsPanel.SetActive(false);
-        dialogueText.gameObject.SetActive(true);
-        pressSpaceTip.gameObject.SetActive(true);
+        if (optionsPanel) optionsPanel.SetActive(false);
+        if (dialogueText) dialogueText.gameObject.SetActive(true);
+        if (pressSpaceTip) pressSpaceTip.gameObject.SetActive(true);
 
         currentSentence = currentNode.sentence;
         typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
@@ -168,6 +188,7 @@ public class DialogueManager : MonoBehaviour
 
     private void ShowOptions(DialogueOption[] options)
     {
+        if (!optionsPanel) return;
         optionsPanel.SetActive(true);
 
         for (int i = 0; i < optionTexts.Length; i++)
@@ -224,7 +245,7 @@ public class DialogueManager : MonoBehaviour
         yield return null;
 
         isDialogueActive = false;
-        dialogueUI.SetActive(false);
+        if (dialogueUI) dialogueUI.SetActive(false);
 
         if (miraManager != null)
             miraManager.SetVisible(false);
@@ -277,7 +298,6 @@ public class DialogueManager : MonoBehaviour
             }
             else if (questionPhase == QuestionPhase.ShowingWrongAnswer)
             {
-                // ✅ Volvemos a la pregunta
                 questionPhase = QuestionPhase.ShowingQuestionText;
                 ShowNextNode();
             }

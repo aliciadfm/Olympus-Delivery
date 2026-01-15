@@ -12,7 +12,6 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Start()
     {
-        playerCamera = Camera.main?.transform;
         if (pressEIndicator) pressEIndicator.SetActive(false);
     }
 
@@ -34,17 +33,19 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    private bool IsPlayerLooking()
-    {
-        if (!playerCamera) return false;
+    	private bool IsPlayerLooking()
+	{
+    		if (playerCamera == null) playerCamera = Camera.main?.transform;
+    		if (playerCamera == null) return false;
 
-        Ray ray = new Ray(playerCamera.position, playerCamera.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactionLayer))
-        {
-            return hit.transform == transform || hit.transform.IsChildOf(transform);
-        }
-        return false;
-    }
+    		Ray ray = new Ray(playerCamera.position, playerCamera.forward);
+    
+    		if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactionLayer))
+    		{
+        		return hit.transform == transform || hit.transform.IsChildOf(transform);
+    		}
+    		return false;
+	}
 
     private void StartDialogue()
     {
