@@ -1145,6 +1145,7 @@ GameObject:
   - component: {fileID: 2034053373}
   - component: {fileID: 2034053372}
   - component: {fileID: 2034053375}
+  - component: {fileID: 2034053376}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1260,6 +1261,20 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &2034053376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034053370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbaa58e5ba30d9e4cbe82c1d3679a907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posicionFija: {x: 0, y: 0, z: 0}
+  rotacionFija: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

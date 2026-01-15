@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
-  m_Name: Hefesto 4
+  m_Name: Fin2
   m_EditorClassIdentifier: 
-  npcName: Hefesto
+  npcName: 
   nodes:
   - type: 0
-    sentence: "\xBFA qu\xE9 esperas? Mi m\xF3vil est\xE1 ah\xED. Ac\xE9rcate a \xE9l."
+    sentence: "No llores por mi, yo no lo har\xEDa por ti. M\xE9tete en el portal
+      cuando est\xE9s listo."
     options: []

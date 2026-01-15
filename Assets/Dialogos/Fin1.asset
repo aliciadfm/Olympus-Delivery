@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1b37d13b1fc8c4a9e50e48b0186a22, type: 3}
+  m_Name: Fin1
+  m_EditorClassIdentifier: 
+  npcName: Zeus
+  nodes:
+  - type: 0
+    sentence: Vaya, vaya. Parecer se que has ayudadado a tu primer Dios.
+    options: []
+  - type: 0
+    sentence: "Dej\xE9mosle el resto del asunto rom\xE1ntico a \xE9l por ahora."
+    options: []
+  - type: 0
+    sentence: "Los Dioses ya han o\xEDdo hablar de ti y esperan que les ayudes. Pero
+      eso ser\xE1 para otro d\xEDa."
+    options: []
+  - type: 0
+    sentence: "O eso me gustar\xEDa decir, has llegado al final del juego. Y no hay
+      indicios de que vaya a ser actualizado pronto."
+    options: []
+  - type: 0
+    sentence: "As\xED que nada, m\xE9tete al portal cuando quieras decir adi\xF3s
+      a todo eso."
+    options: []

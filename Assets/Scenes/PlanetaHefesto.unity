@@ -23955,11 +23955,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 927e4e8e42437b94f97d777234a39dcf, type: 3}
---- !u!1 &1495994993 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 662330050717696043, guid: 927e4e8e42437b94f97d777234a39dcf, type: 3}
-  m_PrefabInstance: {fileID: 1495994992}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1499215325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25063,7 +25058,7 @@ GameObject:
   - component: {fileID: 1592834498}
   m_Layer: 0
   m_Name: mobileT
-  m_TagString: interactuable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25149,7 +25144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escenaTinder: Thunder
-  textoPrompt: {fileID: 1495994993}
 --- !u!135 &1592834499
 SphereCollider:
   m_ObjectHideFlags: 0
