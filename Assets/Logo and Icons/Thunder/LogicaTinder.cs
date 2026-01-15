@@ -35,12 +35,19 @@ public class LogicaThunder : MonoBehaviour
     }
 
     void Avanzar() {
-        indiceActual++;
-        if (indiceActual < niveles.Length) {
-            ActualizarInterfaz();
-        } else {
-            Debug.Log("¡Juego Completado!");
-        }
+    	indiceActual++;
+    
+    	if (indiceActual < niveles.Length) {
+        	ActualizarInterfaz();
+    	}
+    	else {
+        	Debug.Log("¡Minijuego superado!");
+        	CargarEscenaFinal();
+    	}
+	}
+
+    void CargarEscenaFinal() {
+    	SceneManager.LoadScene("FinJuego");
     }
 
     void MostrarError() {
