@@ -17,6 +17,6 @@ public class HammerTrigger : MonoBehaviour
 	if (hammer) hammer2.SetActive(true);
         if (characterBefore) characterBefore.SetActive(false);
         if (characterAfter) characterAfter.SetActive(true);
-	if (mobile) characterAfter.SetActive(true);
+        if (mobile) mobile.SetActive(true);
     }
 }

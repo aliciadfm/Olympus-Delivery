@@ -23,22 +23,24 @@ public class PlayerSpawn : MonoBehaviour
             player.tag = "Player";
             DontDestroyOnLoad(player);
         }
-
+        
         var cc = player.GetComponent<CharacterController>();
         if (cc) cc.enabled = false;
 
-        player.transform.SetPositionAndRotation(transform.position, transform.rotation);
-
-        yield return new WaitForEndOfFrame();
-
-        if (cc) cc.enabled = true;
+        player.transform.position = transform.position;
+        player.transform.rotation = transform.rotation;
 
         var pm = player.GetComponent<PlayerMovement>();
-        if (pm)
+        if (pm != null)
         {
-            pm.canMove = true;
             pm.ResetDeathState();
+            pm.canMove = true;
         }
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (cc) cc.enabled = true;
+        
+        Debug.Log("Jugador posicionado correctamente en el Mundo 2.");
     }
 }
-
